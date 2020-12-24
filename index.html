@@ -1,11 +1,14 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>MerryChristmas</title>
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Gamja+Flower&display=swap" rel="stylesheet">
+    <meta property="og:image" content="img/og-image.jpg">
+    <meta property="og:title" content="MBC 성탄절 편지">
+    <meta property="og:description" content="2020을 추억하며">
     <style>
         * {
             margin:0;
@@ -13,7 +16,7 @@
         }
         button, textarea, input, select{
             font-family: 'Gamja Flower', cursive;
-            font-size: 24px; /*보통 폰트의 2/3정도 사이즈 - 16px malgun-gothic 비슷?*/
+            font-size: 24px; 
             border:0;
             background: transparent;
         }
@@ -25,9 +28,18 @@
         }
         body {            
             height:100%;
+            background:#000;
+            position: relative;
         }
 
-        #loadingSpinner {
+        .x-mas{
+            position: absolute;
+            left:50%;
+            top:50%;
+            transform:translate(-50%, -50%);
+            color:#fff;
+        }
+        /* #loadingSpinner {
             display:none;
             position: fixed;
             left:0;
@@ -123,11 +135,11 @@
             to {
                 opacity:0.3;
             }
-        }
+        } */
     </style>
 </head>
 <body>
-    <div id="loadingSpinner">
+    <!-- <div id="loadingSpinner">
         <span class="spinner"></span>
     </div>
     <div class="horizontal">
@@ -141,6 +153,9 @@
             <h1 class="title">Merry ChristMas!!</h1>
             <button class="click">click!!</button>
         </div>
+    </div> -->
+    <div id="xMas" class="x-mas">
+        <p id="msg"></p>
     </div>
 <script>
     //훔쳐보다니!ㅇㅅㅇ
@@ -258,41 +273,62 @@
 
 
     window.addEventListener('load', e =>{
-        if(window.innerHeight < window.innerWidth){
-            document.querySelector('.horizontal').style.display = 'block';
-        }else{
-            document.querySelector('.vertical').style.display = 'block';
-        }
+        // if(window.innerHeight < window.innerWidth){
+        //     document.querySelector('.horizontal').style.display = 'block';
+        // }else{
+        //     document.querySelector('.vertical').style.display = 'block';
+        // }
         
         initsnow();
     })
 
     window.addEventListener('resize', e => {
         clearTimeout(timer);
-        if(window.innerHeight < window.innerWidth){ //PC
-            document.querySelector('.horizontal').style.display = 'block';
-            document.querySelector('.vertical').style.display = 'none';
-        }else{
-            document.querySelector('.horizontal').style.display = 'none';
-            document.querySelector('.vertical').style.display = 'block';
-        }
+        // if(window.innerHeight < window.innerWidth){ //PC
+        //     document.querySelector('.horizontal').style.display = 'block';
+        //     document.querySelector('.vertical').style.display = 'none';
+        // }else{
+        //     document.querySelector('.horizontal').style.display = 'none';
+        //     document.querySelector('.vertical').style.display = 'block';
+        // }
         initsnow();
     })
 
     const button = Array.from(document.querySelectorAll('.click'));
     
-    button.map(e => {
-        e.addEventListener('click', (e)=>{
-            const agree = confirm('누르면 무슨일이 일어날지 궁금하죠?');
-            if(agree){
-                alert('미안 아직 생각중이야')
-            }else{
-                alert('왜 안궁금해 하는데')
-            }
-        })
-    })
-  
+    // button.map(e => {
+    //     e.addEventListener('click', (e)=>{
+    //         const agree = confirm('누르면 무슨일이 일어날지 궁금하죠?');
+    //         if(agree){
+    //             alert('미안 아직 생각중이야')
+    //         }else{
+    //             alert('왜 안궁금해 하는데')
+    //         }
+    //     })
+    // })
 
+    const msgData = [
+        '크리스마스 이브에요',
+        '오늘 뭐 할거에요?',
+    ]
+  
+    window.addEventListener('load', function(e){
+        const msg = msgData.map(e => Array.from(e));
+        const target = document.getElementById('msg');
+        target.textContent = '';
+
+        let cnt = 0;      
+
+        const typing = setInterval(e => {
+            target.textContent = target.textContent + msgData[0][cnt]
+            cnt++;
+                        
+            if(cnt === msgData[1].length) clearInterval(typing);
+        }, 200)
+        
+        
+
+    })
 
 
 </script>
