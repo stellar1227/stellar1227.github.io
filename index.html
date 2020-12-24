@@ -308,27 +308,84 @@
     // })
 
     const msgData = [
-        '크리스마스 이브에요',
-        '오늘 뭐 할거에요?',
+        '안녕 MBC 여러분',
+        '이름을 알려줄래요?',
+        '앗하 {{name}} 님 오늘 뭐 할거에요?',
+        '뭐든간에 MerryChristMas!',
+        '가기전에 책 추천 해드려도 돼요?',
     ]
+
+    const happyData = [
+
+    ]
+
+    const bookData = [
+        
+    ]
+    
+
+    function msgTyper(msg, callback, delay){
+        const _msg = [...msg];
+        const _callback = callback || function(){};
+        const _delay = delay ||600;
+        const target = document.getElementById('msg');
+
+        target.innerHTML = '';
+
+        let cnt = 0;
+        const typer = () => {            
+            if(cnt === _msg.length) {
+                _callback();
+                return;
+            }
+            
+            target.innerHTML = target.innerHTML + _msg[cnt];
+            cnt++;
+
+            setTimeout(typer, 200);
+        }
+        
+        setTimeout(typer, _delay);
+
+    }
+
+
   
     window.addEventListener('load', function(e){
-        const msg = msgData.map(e => Array.from(e));
-        const target = document.getElementById('msg');
-        target.textContent = '';
-
-        let cnt = 0;      
-
-        const typing = setInterval(e => {
-            target.textContent = target.textContent + msgData[0][cnt]
-            cnt++;
-                        
-            if(cnt === msgData[1].length) clearInterval(typing);
-        }, 200)
-        
-        
+        msgTyper(msgData[0], () => {
+            msgTyper(msgData[1], () => {                
+                const name = prompt('뭐에요');
+                if(name === ''){
+                    name = '익명의'
+                }
+                const nameMsg = msgData[2].replace(/{{name}}/, name);
+                msgTyper(nameMsg, () => {
+                    const answer = confirm('아주 행복하시겠죠?');
+                    if(answer){
+                        alert('아부럽네')
+                    }else{
+                        alert('힘내십셔')
+                    }
+                    msgTyper(msgData[3],()=>{
+                        msgTyper(msgData[4], () => {
+                            const isOK = confirm('어때여');
+                            if(isOK){
+                                alert('아 근데 나 집에가야해서 이따가')
+                            }else{
+                                alert('아왜요 나빴네빠이')
+                                window.close();
+                            }
+                        })
+                    }, 700)
+                }, 500)
+            })
+        })
+       
 
     })
+    
+        
+       
 
 
 </script>
