@@ -3,392 +3,170 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MerryChristmas</title>
+    <title>Blog's Theme</title>
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Gamja+Flower&display=swap" rel="stylesheet">
-    <meta property="og:image" content="img/og-image.jpg">
-    <meta property="og:title" content="MBC 성탄절 편지">
-    <meta property="og:description" content="2020을 추억하며">
-    <style>
-        * {
-            margin:0;
-            padding:0;
-        }
-        button, textarea, input, select{
-            font-family: 'Gamja Flower', cursive;
-            font-size: 24px; 
-            border:0;
-            background: transparent;
-        }
-        html {
-            font-family: 'Gamja Flower', cursive;
-            font-size: 24px; /*보통 폰트의 2/3정도 사이즈 - 16px malgun-gothic 비슷?*/
-            height:100%;
-            min-width:280px;
-        }
-        body {            
-            height:100%;
-            background:#000;
-            position: relative;
-        }
-
-        .x-mas{
-            position: absolute;
-            left:50%;
-            top:50%;
-            transform:translate(-50%, -50%);
-            color:#fff;
-        }
-        /* #loadingSpinner {
-            display:none;
-            position: fixed;
-            left:0;
-            top:0;
-            bottom:0;
-            border-radius:50%;
-            z-index: 50;
-        }
-
-        #loadingSpinner::before{
-            content:"";
-            position:absolute;
-            left:0;
-            top:0;
-            bottom:0;
-            right:0;
-            width:100%;
-            height:100%;
-            background:#000;
-            z-index:45
-        }
-
-        .horizontal{
-            display: none;
-            min-height:100%;
-            background:url('img/x-mas-horizontal1.jpg') no-repeat 50% 50%;
-            background-size:cover;
-            color:#fff;
-        }
-
-        .horizontal .contents{
-            position: absolute;
-            left:50%;
-            top:50%;
-            transform:translate(-50%,-50%);
-            text-align: center;
-        }
-
-        .horizontal .title{            
-            animation: twinkle 0.4s infinite alternate-reverse;
-        }
-
-        .horizontal .click {
-            font-size:1.5rem;
-            padding:20px;
-            margin-top:10px;
-            cursor:pointer;
-            color:#fff;
-            transition : margin-top;
-        }
-        .horizontal .click:hover, .horizontal .click:focus{
-            margin-top:5px;
-        }
-
-
-        .vertical{
-            position: relative;
-            display: none;
-            min-height:100%;
-            background:url('img/x-mas-vertical1.jpg') no-repeat 50% 50%;
-            background-size:cover;
-            color:#fff;
-        }
-
-        .vertical .contents{
-            position: absolute;
-            left:50%;
-            top:50%;
-            transform:translate(-50%,-50%);
-            text-align: center;
-        }
-
-        .vertical .title{            
-            animation: twinkle 0.4s infinite alternate-reverse;
-        }
-
-        .vertical .click {
-            font-size:1.5rem;
-            padding:20px;
-            margin-top:10px;
-            cursor:pointer;
-            color:#fff;
-            transition : margin-top;
-        }
-        .horizontal .click:hover, .horizontal .click:focus{
-            margin-top:5px;
-        }
-
-        @keyframes twinkle {
-            from {
-                opacity:1;
-            }
-            to {
-                opacity:0.3;
-            }
-        } */
-    </style>
+    <!-- <meta property="og:image" content="img/og-image.jpg"> -->
+    <meta property="og:title" content="TEST BLOG">
+    <meta property="og:description" content="블로그테스트입니다">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,700;1,400;1,500;1,700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@200;400;500;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">    
 </head>
 <body>
-    <!-- <div id="loadingSpinner">
-        <span class="spinner"></span>
-    </div>
-    <div class="horizontal">
-        <div class="contents">                    
-            <h1 class="title">Merry ChristMas!!</h1>
-            <button class="click">click!!</button>
+    <div id="root">
+        <header id="header">
+            <h1 class="logo">BLOG's LETTERS</h1>
+        </header>
+        <div class="gnb" id="gnb">
+            <div class="gnb_box">                
+                <button type="button" class="btn_menu" id="btnMenu">
+                    <span>메뉴</span>
+                </button>
+                <section class="menu_section">
+                    <h2 class="blind">GNB</h2>
+                    <ul class="menu">
+                        <li>
+                            <a href="#">MENU1</a>
+                        </li>
+                        <li class="on">
+                            <a href="#" class="has_sub">MENU2</a>
+                            <ul class="sub_menu">
+                                <li><a href="#">SUBMENU1</a></li>
+                                <li><a href="#">SUBMENU2</a></li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a href="#">MENU3</a>
+                        </li>
+                        <li>
+                            <a href="#">MENU4이런식으로</a>
+                        </li>
+                    </ul>
+                </section>
+            </div>
         </div>
+        <section id="container">
+            <h2 class="blind">본문영역</h2>
+            <section id="contents">
+                <ul class="article_list">
+                    <li class="article_box">
+                        <a href="#">                            
+                            <strong class="article_tit">What is Lorem Ipsum?</strong>
+                            <div class="article_thumbnail">
+                                <img src="img/temp_img1.jpg" alt="">
+                            </div>
+                            <p class="article_txt">
+                                Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+                            </p>
+                            <p class="article_info">
+                                <span class="date">Mon Jan 25 2021 04:02</span>
+                            </p>
+                        </a>                        
+                    </li>
+                    <li class="article_box">
+                        <a href="#">                            
+                            <strong class="article_tit">Why do we use it?</strong>
+                            <div class="article_thumbnail">
+                                <img src="img/temp_img2.jpg" alt="">
+                            </div>
+                            <p class="article_txt">
+                                It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).
+                            </p>
+                            <p class="article_info">
+                                <span class="date">Mon Jan 25 2021 04:02</span>
+                            </p>
+                        </a>                        
+                    </li>
+                    <li class="article_box">
+                        <a href="#">                            
+                            <strong class="article_tit">Title 자리</strong>
+                            <div class="article_thumbnail">
+                                <img src="img/temp_img3.jpg" alt="">
+                            </div>
+                            <p class="article_txt">
+                                전직대통령의 신분과 예우에 관하여는 법률로 정한다. 사형을 선고한 경우에는 그러하지 아니하다. 헌법개정안이 제2항의 찬성을 얻은 때에는 헌법개정은 확정되며. 직전대통령이 없을 때에는 대통령이 지명한다.
+                                모든 국민은 법률이 정하는 바에 의하여 선거권을 가진다. 헌법개정안이 제2항의 찬성을 얻은 때에는 헌법개정은 확정되며. 국무회의는 정부의 권한에 속하는 중요한 정책을 심의한다. 국무총리 또는 국무위원이 출석요구를 받은 때에는 국무위원 또는 정부위원으로 하여금 출석·답변하게 할 수 있다.
+                            </p>
+                            <p class="article_info">
+                                <span class="date">Mon Jan 25 2021 04:02</span>
+                            </p>
+                        </a>                        
+                    </li>
+                    <li class="article_box">
+                        <a href="#">                            
+                            <strong class="article_tit">Title 자리</strong>
+                            <div class="article_thumbnail">
+                                <img src="img/temp_img4.jpg" alt="">
+                            </div>
+                            <p class="article_txt">
+                                전직대통령의 신분과 예우에 관하여는 법률로 정한다. 사형을 선고한 경우에는 그러하지 아니하다. 헌법개정안이 제2항의 찬성을 얻은 때에는 헌법개정은 확정되며. 직전대통령이 없을 때에는 대통령이 지명한다.
+                                모든 국민은 법률이 정하는 바에 의하여 선거권을 가진다. 헌법개정안이 제2항의 찬성을 얻은 때에는 헌법개정은 확정되며. 국무회의는 정부의 권한에 속하는 중요한 정책을 심의한다. 국무총리 또는 국무위원이 출석요구를 받은 때에는 국무위원 또는 정부위원으로 하여금 출석·답변하게 할 수 있다.
+                            </p>
+                            <p class="article_info">
+                                <span class="date">Mon Jan 25 2021 04:02</span>
+                            </p>
+                        </a>                        
+                    </li>
+                    <li class="article_box">
+                        <a href="#">                            
+                            <strong class="article_tit">Why do we use it?</strong>
+                            <div class="article_thumbnail">
+                                <img src="img/temp_img5.jpg" alt="">
+                            </div>
+                            <p class="article_txt">
+                                It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).
+                            </p>
+                            <p class="article_info">
+                                <span class="date">Mon Jan 25 2021 04:02</span>
+                            </p>
+                        </a>                        
+                    </li>
+                    <li class="article_box">
+                        <a href="#">                            
+                            <strong class="article_tit">Title 자리</strong>
+                            <div class="article_thumbnail">
+                                <img src="img/temp_img6.jpg" alt="">
+                            </div>
+                            <p class="article_txt">
+                                전직대통령의 신분과 예우에 관하여는 법률로 정한다. 사형을 선고한 경우에는 그러하지 아니하다. 헌법개정안이 제2항의 찬성을 얻은 때에는 헌법개정은 확정되며. 직전대통령이 없을 때에는 대통령이 지명한다.
+                                모든 국민은 법률이 정하는 바에 의하여 선거권을 가진다. 헌법개정안이 제2항의 찬성을 얻은 때에는 헌법개정은 확정되며. 국무회의는 정부의 권한에 속하는 중요한 정책을 심의한다. 국무총리 또는 국무위원이 출석요구를 받은 때에는 국무위원 또는 정부위원으로 하여금 출석·답변하게 할 수 있다.
+                            </p>
+                            <p class="article_info">
+                                <span class="date">Mon Jan 25 2021 04:02</span>
+                            </p>
+                        </a>                        
+                    </li>
+                </ul>
+                <div class="pagination">
+                    <strong class="page_now">1</strong>
+                    <a href="#" class="page_link">2</a>
+                    <a href="#" class="page_link">3</a>
+                    <span class="page_ellipsis">...</span>
+                    <a href="#" class="page_link_last">10</a>
+                </div>
+            </section>
+        </section>
+        <footer id="footer">
+            <p class="copyrights">copyrights&copy; 2021 XXX All rights reserved.</p>
+        </footer>
     </div>
-    <div class="vertical">
-        <div class="contents">                    
-            <h1 class="title">Merry ChristMas!!</h1>
-            <button class="click">click!!</button>
-        </div>
-    </div> -->
-    <div id="xMas" class="x-mas">
-        <p id="msg"></p>
-    </div>
-<script>
-    //훔쳐보다니!ㅇㅅㅇ
-    /*
-        Snow Fall 1 - no images - Java Script
-        Visit http://rainbow.arch.scriptmania.com/scripts/
-        for this script and many more
-        */
-
-        // Set the number of snowflakes (more than 30 - 40 not recommended)
-        var snowmax=35
-
-        // Set the colors for the snow. Add as many colors as you like
-        var snowcolor=new Array("#aaaacc","#ddddff","#ccccdd","#f3f3f3","#f0ffff")
-
-        // Set the fonts, that create the snowflakes. Add as many fonts as you like
-        var snowtype=new Array("Times","Arial","Times","Verdana")
-
-        // Set the letter that creates your snowflake (recommended: * )
-        var snowletter="*"
-
-        // Set the speed of sinking (recommended values range from 0.3 to 2)
-        var sinkspeed=0.6
-
-        // Set the maximum-size of your snowflakes
-        var snowmaxsize=30
-
-        // Set the minimal-size of your snowflakes
-        var snowminsize=8
-
-        // Set the snowing-zone
-        // Set 1 for all-over-snowing, set 2 for left-side-snowing
-        // Set 3 for center-snowing, set 4 for right-side-snowing
-        var snowingzone=1
-
-        ///////////////////////////////////////////////////////////////////////////
-        // CONFIGURATION ENDS HERE
-        ///////////////////////////////////////////////////////////////////////////
-
-
-        // Do not edit below this line
-        var snow=new Array()
-        var marginbottom
-        var marginright
-        var timer
-        var i_snow=0
-        var x_mv=new Array();
-        var crds=new Array();
-        var lftrght=new Array();
-        var browserinfos=navigator.userAgent
-        var ie5=document.all&&document.getElementById&&!browserinfos.match(/Opera/)
-        var ns6=document.getElementById&&!document.all
-        var opera=browserinfos.match(/Opera/)
-        var browserok=ie5||ns6||opera
-
-        function randommaker(range) {
-                rand=Math.floor(range*Math.random())
-            return rand
-        }
-
-        function initsnow() {
-                if (ie5 || opera) {
-                        marginbottom = document.body.scrollHeight
-                        marginright = document.body.clientWidth-15
+    <script>
+        const $menu_btn = document.getElementById('btnMenu');
+        const $gnb = document.getElementById('gnb');
+        if($menu_btn){
+            let isOpen = false;
+            $menu_btn.addEventListener('click', function(){
+                if(!isOpen){
+                    $gnb.classList.add('on');
+                    isOpen = true;
+                }else{
+                    $gnb.classList.remove('on');
+                    isOpen = false;
                 }
-                else if (ns6) {
-                        marginbottom = document.body.scrollHeight
-                        marginright = window.innerWidth-15
-                }
-                var snowsizerange=snowmaxsize-snowminsize
-                for (i=0;i<=snowmax;i++) {
-                        crds[i] = 0;
-                    lftrght[i] = Math.random()*15;
-                    x_mv[i] = 0.03 + Math.random()/10;
-                        snow[i]=document.getElementById("s"+i)
-                        snow[i].style.fontFamily=snowtype[randommaker(snowtype.length)]
-                        snow[i].size=randommaker(snowsizerange)+snowminsize
-                        snow[i].style.fontSize=snow[i].size+'px';
-                        snow[i].style.color=snowcolor[randommaker(snowcolor.length)]
-                        snow[i].style.zIndex=1000
-                        snow[i].sink=sinkspeed*snow[i].size/5
-                        if (snowingzone==1) {snow[i].posx=randommaker(marginright-snow[i].size)}
-                        if (snowingzone==2) {snow[i].posx=randommaker(marginright/2-snow[i].size)}
-                        if (snowingzone==3) {snow[i].posx=randommaker(marginright/2-snow[i].size)+marginright/4}
-                        if (snowingzone==4) {snow[i].posx=randommaker(marginright/2-snow[i].size)+marginright/2}
-                        snow[i].posy=randommaker(2*marginbottom-marginbottom-2*snow[i].size)
-                        snow[i].style.left=snow[i].posx+'px';
-                        snow[i].style.top=snow[i].posy+'px';
-                }
-                movesnow()
+            });
         }
-
-        function movesnow() {
-            for (i=0;i<=snowmax;i++) {
-                    crds[i] += x_mv[i];
-                    snow[i].posy+=snow[i].sink
-                    snow[i].style.left=snow[i].posx+lftrght[i]*Math.sin(crds[i])+'px';
-                    snow[i].style.top=snow[i].posy+'px';
-
-                    if (snow[i].posy>=marginbottom-2*snow[i].size || parseInt(snow[i].style.left)>(marginright-3*lftrght[i])){
-                            if (snowingzone==1) {snow[i].posx=randommaker(marginright-snow[i].size)}
-                            if (snowingzone==2) {snow[i].posx=randommaker(marginright/2-snow[i].size)}
-                            if (snowingzone==3) {snow[i].posx=randommaker(marginright/2-snow[i].size)+marginright/4}
-                            if (snowingzone==4) {snow[i].posx=randommaker(marginright/2-snow[i].size)+marginright/2}
-                            snow[i].posy=0
-                    }
-            }
-            timer=setTimeout("movesnow()",50)
-        }
-
-        for (i=0;i<=snowmax;i++) {
-            document.write("<span id='s"+i+"' style='position:absolute;top:-"+snowmaxsize+"'>"+snowletter+"</span>")
-        }
-
-
-
-    window.addEventListener('load', e =>{
-        // if(window.innerHeight < window.innerWidth){
-        //     document.querySelector('.horizontal').style.display = 'block';
-        // }else{
-        //     document.querySelector('.vertical').style.display = 'block';
-        // }
-        
-        initsnow();
-    })
-
-    window.addEventListener('resize', e => {
-        clearTimeout(timer);
-        // if(window.innerHeight < window.innerWidth){ //PC
-        //     document.querySelector('.horizontal').style.display = 'block';
-        //     document.querySelector('.vertical').style.display = 'none';
-        // }else{
-        //     document.querySelector('.horizontal').style.display = 'none';
-        //     document.querySelector('.vertical').style.display = 'block';
-        // }
-        initsnow();
-    })
-
-    const button = Array.from(document.querySelectorAll('.click'));
-    
-    // button.map(e => {
-    //     e.addEventListener('click', (e)=>{
-    //         const agree = confirm('누르면 무슨일이 일어날지 궁금하죠?');
-    //         if(agree){
-    //             alert('미안 아직 생각중이야')
-    //         }else{
-    //             alert('왜 안궁금해 하는데')
-    //         }
-    //     })
-    // })
-
-    const msgData = [
-        '안녕 MBC 여러분',
-        '이름을 알려줄래요?',
-        '앗하 {{name}} 님 오늘 뭐 할거에요?',
-        '뭐든간에 MerryChristMas!',
-        '가기전에 책 추천 해드려도 돼요?',
-    ]
-
-    const happyData = [
-
-    ]
-
-    const bookData = [
-        
-    ]
-    
-
-    function msgTyper(msg, callback, delay){
-        const _msg = [...msg];
-        const _callback = callback || function(){};
-        const _delay = delay ||600;
-        const target = document.getElementById('msg');
-
-        target.innerHTML = '';
-
-        let cnt = 0;
-        const typer = () => {            
-            if(cnt === _msg.length) {
-                _callback();
-                return;
-            }
-            
-            target.innerHTML = target.innerHTML + _msg[cnt];
-            cnt++;
-
-            setTimeout(typer, 200);
-        }
-        
-        setTimeout(typer, _delay);
-
-    }
-
-
-  
-    window.addEventListener('load', function(e){
-        msgTyper(msgData[0], () => {
-            msgTyper(msgData[1], () => {                
-                const name = prompt('뭐에요');
-                if(name === ''){
-                    name = '익명의'
-                }
-                const nameMsg = msgData[2].replace(/{{name}}/, name);
-                msgTyper(nameMsg, () => {
-                    const answer = confirm('아주 행복하시겠죠?');
-                    if(answer){
-                        alert('아부럽네')
-                    }else{
-                        alert('힘내십셔')
-                    }
-                    msgTyper(msgData[3],()=>{
-                        msgTyper(msgData[4], () => {
-                            const isOK = confirm('어때여');
-                            if(isOK){
-                                alert('아 근데 나 집에가야해서 이따가')
-                            }else{
-                                alert('아왜요 나빴네빠이')
-                                document.getElementById('msg').textContent = '인제 닫아주세여...'
-                                window.close();
-                            }
-                        })
-                    }, 700)
-                }, 500)
-            })
-        })
-       
-
-    })
-    
-        
-       
-
-
-</script>
+    </script>
 </body>
 </html>
