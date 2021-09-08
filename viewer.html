@@ -420,11 +420,10 @@ See https://github.com/adobe-type-tools/cmap-resources
           }else if(ev.additionalEvent === 'pinchIn'){
             const isScaleOver = document.querySelector('.page').clientWidth < viewer.clientWidth ; 
             if(isScaleOver) return ;
-              PDFViewerApplication.zoomOut(1)
-            }
+            PDFViewerApplication.zoomOut(1)
           }
         }
-        console.log(ev.type)
+        console.log()
         
         
         
