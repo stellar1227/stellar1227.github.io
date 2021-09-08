@@ -402,7 +402,7 @@ See https://github.com/adobe-type-tools/cmap-resources
       
       const hammertime = new Hammer(viewer);
       
-      hammertime.on('pan', function(ev){
+      hammertime.on('swipeleft swiperight pinchin pinchout pinchstart pinchend', function(ev){
         console.log(ev)
         console.log(ev.type)
         
