@@ -400,30 +400,28 @@ See https://github.com/adobe-type-tools/cmap-resources
      
       const viewer = document.getElementById('viewerContainer');
       
-      const hammertime = new Hammer(viewer);
+      const hammertime = new Hammer(viewer, {touchAction : 'pan-y'});
       hammertime.get('pinch').set({enable : true})
       
-      hammertime.on('pinchin pinchout pinchstart pinchend', function(ev){
-        // if(ev.type === 'swipe'){
-        //   const isScaleOver = document.querySelector('.page').clientWidth > viewer.clientWidth ; 
-        //   if(isScaleOver) return ; 
-        //   console.log(ev)
-        //   if(ev.offsetDirection === 2){
-        //     PDFViewerApplication.pdfViewer.nextPage(); 
-        //   }else{
-        //     PDFViewerApplication.pdfViewer.previousPage();
-        //   }
-        // }
-        if(ev.type === 'pinchend'){
-          if(ev.additionalEvent === 'pinchout'){
-            PDFViewerApplication.zoomIn(3)
+      hammertime.on('swipe pinchin pinchout pinchstart pinchend', function(ev){
+        if(ev.type === 'swipe'){
+          const isScaleOver = document.querySelector('.page').clientWidth > viewer.clientWidth ; 
+          if(isScaleOver) return ; 
+          //console.log(ev)
+          if(ev.offsetDirection === 2){
+            PDFViewerApplication.pdfViewer.nextPage(); 
+          }else{
+            PDFViewerApplication.pdfViewer.previousPage();
+          }
+        }
+        if(ev.additionalEvent === 'pinchout'){
+            PDFViewerApplication.zoomIn(1)
           }else if(ev.additionalEvent === 'pinchin'){
             const isScaleOver = document.querySelector('.page').clientWidth < viewer.clientWidth ; 
             if(isScaleOver) return ;
-            PDFViewerApplication.zoomOut(3)
+            PDFViewerApplication.zoomOut(1)
           }
-        }
-        console.log(ev)
+        //console.log(ev)
         
         
         
