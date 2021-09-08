@@ -399,9 +399,13 @@ See https://github.com/adobe-type-tools/cmap-resources
     <script>
      
       const viewer = document.getElementById('viewerContainer');
-      const hammertime = new Hammer(viewer, {touchAction : 'pan-x pan-y'});
-      
-      /*swipe*/
+      console.log(document.querySelector('#viewerContainer').children[0].children)
+      setTimeout(() => {
+        const pages = document.querySelectorAll('.page')
+        
+        pages.forEach((el) => {
+          const hammertime = new Hammer(el);
+           /*swipe*/
       hammertime.on('swipe', function(ev) {
         console.log(ev)
         const isScaleOver = document.querySelector('.page').clientWidth > viewer.clientWidth ; 
@@ -412,8 +416,15 @@ See https://github.com/adobe-type-tools/cmap-resources
         }else{
           PDFViewerApplication.pdfViewer.previousPage();
         }
-      });
+      });     
+        })
+        
+      //const hammertime = new Hammer(viewer, {touchAction : 'pan-x pan-y'});
+      
+     
 
+      },2000)
+      
       // /*pinch to zoom*/
       // hammertime.get('pinch').set({ enable: true });
       // hammertime.on('pinch', function(ev){
