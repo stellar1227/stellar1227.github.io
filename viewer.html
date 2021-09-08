@@ -403,6 +403,7 @@ See https://github.com/adobe-type-tools/cmap-resources
       
       /*swipe*/
       hammertime.on('swipe', function(ev) {
+        console.log(ev)
         const isScaleOver = document.querySelector('.page').clientWidth > viewer.clientWidth ; 
         if(isScaleOver) return ; 
 
