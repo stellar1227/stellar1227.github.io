@@ -415,8 +415,8 @@ See https://github.com/adobe-type-tools/cmap-resources
 
       /*pinch to zoom*/
       hammertime.get('pinch').set({ enable: true });
-      hammertime.on('pinch', function(ev){
-        console.log(ev)
+      hammertime.on('pinchstart, pinchmove', function(ev){
+        console.log(ev.additionalEvent, ev)
       })
 
     </script>
