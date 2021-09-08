@@ -420,15 +420,14 @@ See https://github.com/adobe-type-tools/cmap-resources
 
           // /*pinch to zoom*/
       hammertime.get('pinch').set({ enable: true });
-      hammertime.get('pan',{enabled: true})
-      hammertime.get('pan', function*(ev){
-        console.log('ev')
-      })
+      
       hammertime.on('pinch', function(ev){
         if(ev.additionalEvent === 'pinchout'){ 
-          PDFViewerApplication.zoomIn(0.1)
+          PDFViewerApplication.zoomIn(0.01)
         }else{
-           PDFViewerApplication.zoomOut(0.1)
+          const isScaleOver = document.querySelector('.page').clientWidth < viewer.clientWidth ; 
+            if(isScaleOver) return ;
+           PDFViewerApplication.zoomOut(0.01)
         }
         console.log(ev.additionalEvent)
       })
