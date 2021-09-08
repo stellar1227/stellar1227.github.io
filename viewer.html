@@ -402,13 +402,15 @@ See https://github.com/adobe-type-tools/cmap-resources
       
       const hammertime = new Hammer(viewer);
       
+      hammertime.get('pan').set({direction:Hammer.DIRECTION_ALL})
+      hammertime.get('swipe').set({direction:Hammer.DIRECTION_VERTICAL})
       hammertime.on('pan', function(ev){
         console.log(ev.additionalEvent)
       })
       hammertime.on('swipe', function(ev){
         console.log(ev.additionalEvent)
       })
-      hammertime.get('pinch').set({enabled : true})
+      hammertime.get('pinch').set({enable: true})
       hammertime.on('pinch', function(ev){
         console.log(ev.additionalEvent)
       })
