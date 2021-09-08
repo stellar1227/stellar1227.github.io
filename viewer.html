@@ -403,7 +403,7 @@ See https://github.com/adobe-type-tools/cmap-resources
       const hammertime = new Hammer(viewer);
       hammertime.get('pinch').set({enable : true})
       
-      hammertime.on('pinchin pinch out pinchstart pinchend', function(ev){
+      hammertime.on('pinchin pinchout pinchstart pinchend', function(ev){
         // if(ev.type === 'swipe'){
         //   const isScaleOver = document.querySelector('.page').clientWidth > viewer.clientWidth ; 
         //   if(isScaleOver) return ; 
@@ -414,17 +414,19 @@ See https://github.com/adobe-type-tools/cmap-resources
         //     PDFViewerApplication.pdfViewer.previousPage();
         //   }
         // }
-        console.log(ev)
+        if(ev.type === 'pinchend'){
+          if(ev.additionalEvent === 'pinchout'){
+            PDFViewerApplication.zoomIn(1)
+          }else if(ev.additionalEvent === 'pinchIn'){
+            const isScaleOver = document.querySelector('.page').clientWidth < viewer.clientWidth ; 
+            if(isScaleOver) return ;
+              PDFViewerApplication.zoomOut(1)
+            }
+          }
+        }
+        console.log(ev.type)
         
-        if(ev.type === 'pinch'){
-          if(ev.additionalEvent === 'pinchout'){ 
-          PDFViewerApplication.zoomIn(1)
-        }else{
-          const isScaleOver = document.querySelector('.page').clientWidth < viewer.clientWidth ; 
-        if(isScaleOver) return ;
-           PDFViewerApplication.zoomOut(1)
-        }
-        }
+        
         
       })
       // hammertime.on('swipe', function(ev){
