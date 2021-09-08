@@ -402,19 +402,19 @@ See https://github.com/adobe-type-tools/cmap-resources
       const hammertime = new Hammer(viewer);
       
       /*swipe*/
-      hammertime.on('swipe', function(ev) {
-        const isScaleOver = document.querySelector('.page').clientWidth > viewer.clientWidth ; 
-        if(isScaleOver) return ; 
+      // hammertime.on('swipe', function(ev) {
+      //   const isScaleOver = document.querySelector('.page').clientWidth > viewer.clientWidth ; 
+      //   if(isScaleOver) return ; 
 
-        if(ev.offsetDirection === 2){
-          PDFViewerApplication.pdfViewer.nextPage(); 
-        }else{
-          PDFViewerApplication.pdfViewer.previousPage();
-        }
-      });
+      //   if(ev.offsetDirection === 2){
+      //     PDFViewerApplication.pdfViewer.nextPage(); 
+      //   }else{
+      //     PDFViewerApplication.pdfViewer.previousPage();
+      //   }
+      // });
 
-      /*pinch to zoom*/
-      hammertime.get('pinch').set({ enable: true });
+      // /*pinch to zoom*/
+      // hammertime.get('pinch').set({ enable: true });
       // hammertime.on('pinch', function(ev){
       //   // if(ev.additionalEvent === 'pinchout'){ 
       //   //   PDFViewerApplication.zoomIn()
