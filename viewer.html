@@ -417,6 +417,7 @@ See https://github.com/adobe-type-tools/cmap-resources
       hammertime.get('pinch').set({ enable: true });
       hammertime.on('pinch', function(ev){
         console.log(ev.additionalEvent, ev)
+        PDFViewerApplication.zoomIn(2)
       })
 
     </script>
