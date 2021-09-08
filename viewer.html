@@ -401,7 +401,7 @@ See https://github.com/adobe-type-tools/cmap-resources
       const viewer = document.getElementById('viewerContainer');
       
       const hammertime = new Hammer(viewer);
-      //hammertime.get('pinch').set({enable : true})
+      hammertime.get('pinch').set({enable : true})
       
       hammertime.on('pinch', function(ev){
         console.log(ev)
