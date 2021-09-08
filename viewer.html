@@ -417,9 +417,10 @@ See https://github.com/adobe-type-tools/cmap-resources
         
         if(ev.type === 'pinch'){
           if(ev.additionalEvent === 'pinchout'){ 
-          PDFViewerApplication.zoomIn()
+          PDFViewerApplication.zoomIn(1)
         }else{
-           PDFViewerApplication.zoomOut()
+           if(PDFViewerApplication.pdfViewer.currentScale < 1) return;
+           PDFViewerApplication.zoomOut(1)
         }
         }
         
