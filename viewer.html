@@ -406,17 +406,28 @@ See https://github.com/adobe-type-tools/cmap-resources
         pages.forEach((el) => {
           const hammertime = new Hammer(el);
            /*swipe*/
-      hammertime.on('swipe', function(ev) {
-        console.log(ev)
-        const isScaleOver = document.querySelector('.page').clientWidth > viewer.clientWidth ; 
-        if(isScaleOver) return ; 
+          hammertime.on('swipe', function(ev) {
+            console.log(ev)
+            const isScaleOver = document.querySelector('.page').clientWidth > viewer.clientWidth ; 
+            if(isScaleOver) return ; 
 
-        if(ev.offsetDirection === 2){
-          PDFViewerApplication.pdfViewer.nextPage(); 
+            if(ev.offsetDirection === 2){
+              PDFViewerApplication.pdfViewer.nextPage(); 
+            }else{
+              PDFViewerApplication.pdfViewer.previousPage();
+            }
+          });
+
+          // /*pinch to zoom*/
+      hammertime.get('pinch').set({ enable: true });
+      hammertime.on('pinch', function(ev){
+        if(ev.additionalEvent === 'pinchout'){ 
+          PDFViewerApplication.zoomIn(0.1)
         }else{
-          PDFViewerApplication.pdfViewer.previousPage();
+           PDFViewerApplication.zoomOut(0.1)
         }
-      });     
+        console.log(ev.additionalEvent)
+      })
         })
         
       //const hammertime = new Hammer(viewer, {touchAction : 'pan-x pan-y'});
@@ -425,16 +436,7 @@ See https://github.com/adobe-type-tools/cmap-resources
 
       },2000)
       
-      // /*pinch to zoom*/
-      // hammertime.get('pinch').set({ enable: true });
-      // hammertime.on('pinch', function(ev){
-      //   // if(ev.additionalEvent === 'pinchout'){ 
-      //   //   PDFViewerApplication.zoomIn()
-      //   // }else{
-      //   //    PDFViewerApplication.zoomOut()
-      //   // }
-      //   console.log(ev.additionalEvent)
-      // })
+      
 
     </script>
   </body>
