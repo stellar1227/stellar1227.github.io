@@ -403,9 +403,12 @@ See https://github.com/adobe-type-tools/cmap-resources
       const hammertime = new Hammer(viewer);
       hammertime.get('pinch').set({enable : true})
       
-      hammertime.on('pinch', function(ev){
-        console.log(ev)
-        console.log(ev.type)
+      hammertime.on('pinchin pinchout', function(ev){
+        if(ev.additionalEvent === 'pinchout'){ 
+          PDFViewerApplication.zoomIn(0.05)
+        }else{
+           PDFViewerApplication.zoomOut(0.05)
+        }
         
       })
       // hammertime.on('swipe', function(ev){
