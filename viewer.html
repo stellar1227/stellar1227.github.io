@@ -400,20 +400,21 @@ See https://github.com/adobe-type-tools/cmap-resources
      
       const viewer = document.getElementById('viewerContainer');
       
-      const hammertime = new Hammer(viewer, {touchAction : 'pan-x pan-y'});
+      const hammertime = new Hammer(viewer);
       hammertime.get('pinch').set({enable : true})
       
-      hammertime.on('swipe pinch', function(ev){
-        if(ev.type === 'swipe'){
-          const isScaleOver = document.querySelector('.page').clientWidth > viewer.clientWidth ; 
-          if(isScaleOver) return ; 
-          console.log(ev)
-          if(ev.offsetDirection === 2){
-            PDFViewerApplication.pdfViewer.nextPage(); 
-          }else{
-            PDFViewerApplication.pdfViewer.previousPage();
-          }
-        }
+      hammertime.on('pinchin pinch out pinchstart pinchend', function(ev){
+        // if(ev.type === 'swipe'){
+        //   const isScaleOver = document.querySelector('.page').clientWidth > viewer.clientWidth ; 
+        //   if(isScaleOver) return ; 
+        //   console.log(ev)
+        //   if(ev.offsetDirection === 2){
+        //     PDFViewerApplication.pdfViewer.nextPage(); 
+        //   }else{
+        //     PDFViewerApplication.pdfViewer.previousPage();
+        //   }
+        // }
+        console.log(ev)
         
         if(ev.type === 'pinch'){
           if(ev.additionalEvent === 'pinchout'){ 
