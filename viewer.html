@@ -420,6 +420,7 @@ See https://github.com/adobe-type-tools/cmap-resources
 
           // /*pinch to zoom*/
       hammertime.get('pinch').set({ enable: true });
+      hammertime.get('pan',{enabled: true})
       hammertime.on('pinch', function(ev){
         if(ev.additionalEvent === 'pinchout'){ 
           PDFViewerApplication.zoomIn(0.1)
