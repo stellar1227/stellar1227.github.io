@@ -399,47 +399,37 @@ See https://github.com/adobe-type-tools/cmap-resources
     <script>
      
       const viewer = document.getElementById('viewerContainer');
-      console.log(document.querySelector('#viewerContainer').children[0].children)
-      setTimeout(() => {
-        const pages = document.querySelectorAll('.page')
-        
-        pages.forEach((el) => {
-          const hammertime = new Hammer(el);
-           /*swipe*/
-          hammertime.on('swipe', function(ev) {
-            console.log(ev)
-            const isScaleOver = document.querySelector('.page').clientWidth > viewer.clientWidth ; 
-            if(isScaleOver) return ; 
-
-            if(ev.offsetDirection === 2){
-              PDFViewerApplication.pdfViewer.nextPage(); 
-            }else{
-              PDFViewerApplication.pdfViewer.previousPage();
-            }
-          });
-
-          // /*pinch to zoom*/
-      hammertime.get('pinch').set({ enable: true });
       
-      hammertime.on('pinch', function(ev){
-        if(ev.additionalEvent === 'pinchout'){ 
-          PDFViewerApplication.zoomIn(0.01)
-        }else{
-          const isScaleOver = document.querySelector('.page').clientWidth < viewer.clientWidth ; 
-            if(isScaleOver) return ;
-           PDFViewerApplication.zoomOut(0.01)
-        }
-        console.log(ev.additionalEvent)
+      const hammertime = new Hammer(viewer);
+      
+      hammertime.on('pan', function(ev){
+        console.log(ev)
       })
-        })
-        
       //const hammertime = new Hammer(viewer, {touchAction : 'pan-x pan-y'});
       
-     
+      // /*swipe*/
+      // hammertime.on('swipe', function(ev) {
+      //   console.log(ev)
+      //   const isScaleOver = document.querySelector('.page').clientWidth > viewer.clientWidth ; 
+      //   if(isScaleOver) return ; 
 
-      },2000)
-      
-      
+      //   if(ev.offsetDirection === 2){
+      //     PDFViewerApplication.pdfViewer.nextPage(); 
+      //   }else{
+      //     PDFViewerApplication.pdfViewer.previousPage();
+      //   }
+      // });
+
+      // /*pinch to zoom*/
+      // hammertime.get('pinch').set({ enable: true });
+      // hammertime.on('pinch', function(ev){
+      //   // if(ev.additionalEvent === 'pinchout'){ 
+      //   //   PDFViewerApplication.zoomIn()
+      //   // }else{
+      //   //    PDFViewerApplication.zoomOut()
+      //   // }
+      //   console.log(ev.additionalEvent)
+      // })
 
     </script>
   </body>
