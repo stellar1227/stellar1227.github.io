@@ -804,13 +804,13 @@ const PDFViewerApplication = {
     }
 
     let newScale = this.pdfViewer.currentScale;
-
+    debugger;
     do {
       newScale = (newScale * DEFAULT_SCALE_DELTA).toFixed(2);
       newScale = Math.ceil(newScale * 10) / 10;
       newScale = Math.min(_ui_utils.MAX_SCALE, newScale);
     } while (--ticks > 0 && newScale < _ui_utils.MAX_SCALE);
-
+    debugger;
     this.pdfViewer.currentScaleValue = newScale;
   },
 
