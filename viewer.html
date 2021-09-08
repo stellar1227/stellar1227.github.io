@@ -400,10 +400,10 @@ See https://github.com/adobe-type-tools/cmap-resources
      
       const viewer = document.getElementById('viewerContainer');
       
-      const hammertime = new Hammer(viewer, {touchAction : 'pan-y pan-x'});
-      hammertime.get('pinch').set({enable : true})
+      const hammertime = new Hammer(viewer);
+      //hammertime.get('pinch').set({enable : true})
       
-      hammertime.on('pinchin pinchout pinchstart pinchend', function(ev){
+      hammertime.on('swipe', function(ev){
         console.log(ev)
         console.log(ev.type)
         
