@@ -426,20 +426,20 @@ See https://github.com/adobe-type-tools/cmap-resources
             pointer : 0
         }));
 
-        hammertime.add(new Hammer.Swipe()).recognizeWith(hammertime.get('pan').set({ direction: Hammer.DIRECTION_HORIZONTAL }));
+        hammertime.add(new Hammer.Swipe()).recognizeWith(hammertime.get('pan'));
         hammertime.on('swipe', onSwipe);
 
         function onSwipe(ev){
             //pan swipe로 reconizerWith 후 디렉션 분리 
             console.log(ev)
             const isScaleOver = document.querySelector('.page').clientWidth > viewer.clientWidth;
-            const direction = ev.offsetDirection === 2 || ev.offsetDirection === 4 ? ev.offsetDirection : null; 
-            console.log(direction)
-            if (isScaleOver || !direction ) return;
+            const direction = (ev.offsetDirection === 2 || ev.offsetDirection === 4) ? 'next' : 'previous'; 
+            console.log(direction, ev.offsetDirection)
+            if (isScaleOver) return;
 
-            if (direction === 2) {
+            if (direction === 'next') {
                 PDFViewerApplication.pdfViewer.nextPage();
-            } else if(direction === 4){
+            } else {
                 PDFViewerApplication.pdfViewer.previousPage();
             } 
         }
