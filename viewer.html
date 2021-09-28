@@ -433,7 +433,7 @@ See https://github.com/adobe-type-tools/cmap-resources
             //pan swipe로 reconizerWith 후 디렉션 분리 
             console.log(ev)
             const isScaleOver = document.querySelector('.page').clientWidth > viewer.clientWidth;
-            const direction = ev.offsetDirection === 2 || ev.offsetDirection === 8 ? ev.offsetDirection : null; 
+            const direction = ev.offsetDirection === 2 || ev.offsetDirection === 4 ? ev.offsetDirection : null; 
             console.log(direction)
             if (isScaleOver || !direction ) return;
 
