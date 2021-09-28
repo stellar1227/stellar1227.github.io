@@ -426,7 +426,7 @@ See https://github.com/adobe-type-tools/cmap-resources
             pointer : 0
         }));
 
-        hammertime.add(new Hammer.Swipe()).reconizeWith(hammertime.get('pan'));
+        hammertime.add(new Hammer.Swipe()).recognizeWith(hammertime.get('pan'));
         hammertime.on('swipe', onSwipe);
 
         function onSwipe(ev){
