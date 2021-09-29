@@ -419,6 +419,11 @@ See https://github.com/adobe-type-tools/cmap-resources
     <script src="libs/hammer.min.js"></script>
     <script>
         const viewer = document.getElementById('viewerContainer');
+        
+        let ticking = false;
+        let transform = {};
+        let timer;
+
         const hammertime = new Hammer.Manager(viewer);
 
         hammertime.add(new Hammer.Pan({
@@ -428,20 +433,52 @@ See https://github.com/adobe-type-tools/cmap-resources
 
         hammertime.add(new Hammer.Swipe()).recognizeWith(hammertime.get('pan'));
         hammertime.on('swipe', onSwipe);
+        hammertime.on('pan', onPan);
 
         function onSwipe(ev){
             //pan swipe로 reconizerWith 후 디렉션 분리 
-            console.log(ev)
-            const isScaleOver = document.querySelector('.page').clientWidth > viewer.clientWidth;
-            const direction = (ev.offsetDirection === 2 || ev.offsetDirection === 8) ? 'next' : 'previous'; 
-            console.log(direction, ev.offsetDirection)
+            console.log('swipe',ev)
+            // const isScaleOver = document.querySelector('.page').clientWidth > viewer.clientWidth;
+            // const direction = (ev.offsetDirection === 2 || ev.offsetDirection === 8) ? 'next' : 'previous'; 
+            // console.log(direction, ev.offsetDirection)
             if (isScaleOver) return;
 
-            if (direction === 'next') {
-                PDFViewerApplication.pdfViewer.nextPage();
-            } else {
-                PDFViewerApplication.pdfViewer.previousPage();
-            } 
+            // if (direction === 'next') {
+            //     PDFViewerApplication.pdfViewer.nextPage();
+            // } else {
+            //     PDFViewerApplication.pdfViewer.previousPage();
+            // } 
+        }
+
+        function onPan(ev){
+            //target이 문제다 
+            console.log('pan', ev)
+            const pages = document.querySelectorAll('.page');
+            console.log(pages[0].offsetWidth)
+            const START_X = Math.round((viewer.offsetWidth - pages[0].offsetWidth) / 2);
+            const START_Y = Math.round((viewer.offsetHeight - pages[0].offsetHeight) / 2);
+
+            transform.translate = {
+                x: START_X + ev.deltaX,
+                y: START_Y + ev.deltaY
+            };
+
+            
+            let value = [
+                'translate3d(' + transform.translate.x + 'px, ' + transform.translate.y + 'px, 0)',
+                // 'scale(' + transform.scale + ', ' + transform.scale + ')',
+                // 'rotate3d('+ transform.rx +','+ transform.ry +','+ transform.rz +','+  transform.angle + 'deg)'
+            ];
+            //console.log(ev.target)
+            
+            value = value.join(" ");
+            // ev.target.style.webkitTransform = value;
+            // ev.target.mozTransform = value;
+            pages.forEach(e => {
+                e.style.transform = value;
+            })
+            // ev.target.style.transform = value;
+            // ticking = false;
         }
 
         // (function(module, exports, __webpack__require__) {
