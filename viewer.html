@@ -418,7 +418,8 @@ See https://github.com/adobe-type-tools/cmap-resources
     <div id="printContainer"></div>
     <script src="libs/hammer.min.js"></script>
     <script>
-        const viewer = document.getElementById('viewer');
+        const viewer = document.getElementById('viewerContainer');
+        const pages = document.getElementById('viewer');
         let ticking = false;
         let transform = {};
         let timer;
@@ -451,21 +452,23 @@ See https://github.com/adobe-type-tools/cmap-resources
 
         function onPan(ev){
             //target이 문제다 
-            console.log('pan', ev)
-            console.log(ev.deltaX)
+            
             // console.log(pages[0].offsetWidth)
 
-            const START_X = Math.round((viewer.offsetWidth) / 2);
-            const START_Y = Math.round((viewer.offsetHeight) / 2);
+            const START_X = Math.round((viewer.offsetWidth - pages.offsetWidth) / 2);
+            const START_Y = Math.round((viewer.offsetHeight - pages.offsetHeight) / 2);
             // console.log(START_X)
 
+            //console.log(START_X)
+
+            
+
             transform.translate = {
-                x : 300 + ev.delatX,
-                y : 400 + ev.delatY
+                x : START_X + ev.deltaX,
+                y : START_Y + ev.deltaY
                 // x: START_X + ev.deltaX,
                 // y: START_Y + ev.deltaY
             }; 
-
 
             let value = [
                 'translate3d(' + transform.translate.x + 'px, ' + transform.translate.y + 'px, 0)',
@@ -476,7 +479,9 @@ See https://github.com/adobe-type-tools/cmap-resources
             //console.log(ev.target)
             
             value = value.join(" ");
-            viewer.style.transform = value;
+
+            
+            pages.style.transform = value;
 
             // ev.target.style.webkitTransform = value;
             // ev.target.mozTransform = value;
