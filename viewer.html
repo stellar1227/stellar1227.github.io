@@ -421,7 +421,12 @@ See https://github.com/adobe-type-tools/cmap-resources
         const viewer = document.getElementById('viewerContainer');
         const pages = document.getElementById('viewer');
         let ticking = false;
-        let transform = {};
+        let transform = {
+            translate : {
+                x : 0, 
+                y : 0
+            }
+        };
         let timer;
 
         const hammertime = new Hammer.Manager(viewer);
@@ -454,10 +459,10 @@ See https://github.com/adobe-type-tools/cmap-resources
             //target이 문제다 
             
             // console.log(pages[0].offsetWidth)
-
-            const START_X = Math.round((viewer.offsetWidth - pages.offsetWidth) / 2);
-            const START_Y = Math.round((viewer.offsetHeight - pages.offsetHeight) / 2);
-            // console.log(START_X)
+            console.log(transform)
+            const START_X = transform.translate.x;
+            const START_Y = transform.translate.y;
+            //console.log(START_X)
 
             //console.log(START_X)
 
@@ -469,6 +474,8 @@ See https://github.com/adobe-type-tools/cmap-resources
                 // x: START_X + ev.deltaX,
                 // y: START_Y + ev.deltaY
             }; 
+
+           // console.log(transform.translate.x)
 
             let value = [
                 'translate3d(' + transform.translate.x + 'px, ' + transform.translate.y + 'px, 0)',
