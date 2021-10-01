@@ -452,7 +452,7 @@ See https://github.com/adobe-type-tools/cmap-resources
         function onPan(ev){
             //target이 문제다 
             console.log('pan', ev)
-            console.log(viewer)
+            console.log(ev.deltaX)
             // console.log(pages[0].offsetWidth)
 
             const START_X = Math.round((viewer.offsetWidth) / 2);
