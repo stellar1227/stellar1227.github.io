@@ -418,8 +418,7 @@ See https://github.com/adobe-type-tools/cmap-resources
     <div id="printContainer"></div>
     <script src="libs/hammer.min.js"></script>
     <script>
-        const viewer = document.getElementById('viewerContainer');
-        
+        const viewer = document.getElementById('viewer');
         let ticking = false;
         let transform = {};
         let timer;
@@ -453,32 +452,39 @@ See https://github.com/adobe-type-tools/cmap-resources
         function onPan(ev){
             //target이 문제다 
             console.log('pan', ev)
-            const pages = document.querySelectorAll('.page');
-            console.log(pages[0].offsetWidth)
-            const START_X = Math.round((viewer.offsetWidth - pages[0].offsetWidth) / 2);
-            const START_Y = Math.round((viewer.offsetHeight - pages[0].offsetHeight) / 2);
+            console.log(viewer)
+            // console.log(pages[0].offsetWidth)
+            // const START_X = Math.round((viewer.offsetWidth - pages[0].offsetWidth) / 2);
+            // const START_Y = Math.round((viewer.offsetHeight - pages[0].offsetHeight) / 2);
+            // console.log(START_X)
 
             transform.translate = {
-                x: START_X + ev.deltaX,
-                y: START_Y + ev.deltaY
-            };
+                x : ev.delatX,
+                y : ev.delatY
+                // x: START_X + ev.deltaX,
+                // y: START_Y + ev.deltaY
+            }; 
 
-            
+
             let value = [
                 'translate3d(' + transform.translate.x + 'px, ' + transform.translate.y + 'px, 0)',
                 // 'scale(' + transform.scale + ', ' + transform.scale + ')',
                 // 'rotate3d('+ transform.rx +','+ transform.ry +','+ transform.rz +','+  transform.angle + 'deg)'
             ];
+
             //console.log(ev.target)
             
             value = value.join(" ");
+            viewer.style.transform = value;
+
             // ev.target.style.webkitTransform = value;
             // ev.target.mozTransform = value;
-            pages.forEach(e => {
-                e.style.transform = value;
-            })
+            // pages.forEach(e => {
+            //     e.style.transform = value;
+            // })
             // ev.target.style.transform = value;
             // ticking = false;
+
         }
 
         // (function(module, exports, __webpack__require__) {
