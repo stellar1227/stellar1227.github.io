@@ -452,6 +452,13 @@ See https://github.com/adobe-type-tools/cmap-resources
         hammertime.on('swipe', onSwipe);
         hammertime.on('pan', onPan);
 
+        // polyfill
+        var reqAnimationFrame = (function () {
+            return window[Hammer.prefixed(window, 'requestAnimationFrame')] || function (callback) {
+                window.setTimeout(callback, 1000 / 60);
+            };
+        })();
+
         function requestElementUpdate() {
             if(!ticking) {
                 reqAnimationFrame(updateElementTransform);
