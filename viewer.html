@@ -452,6 +452,10 @@ See https://github.com/adobe-type-tools/cmap-resources
         hammertime.on('swipe', onSwipe);
         hammertime.on('pan', onPan);
 
+        viewer.addEventListener('touchstart', function(e){
+            console.log(e)
+        })
+
         // polyfill
         var reqAnimationFrame = (function () {
             return window[Hammer.prefixed(window, 'requestAnimationFrame')] || function (callback) {
@@ -491,7 +495,7 @@ See https://github.com/adobe-type-tools/cmap-resources
 
         function onSwipe(ev){
             //pan swipe로 reconizerWith 후 디렉션 분리 
-            console.log('swipe',ev)
+            //console.log('swipe',ev)
             const isScaleOver = document.querySelector('.page').clientWidth > viewer.clientWidth;
             // const direction = (ev.offsetDirection === 2 || ev.offsetDirection === 8) ? 'next' : 'previous'; 
             // console.log(direction, ev.offsetDirection)
@@ -507,6 +511,7 @@ See https://github.com/adobe-type-tools/cmap-resources
 
 
         function onPan(ev) {
+            console.log('pan', ev);
             const START_X = initTransform.translate.x;
             const START_Y = initTransform.translate.y;
 
