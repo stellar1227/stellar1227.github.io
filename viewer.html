@@ -421,12 +421,13 @@ See https://github.com/adobe-type-tools/cmap-resources
         const viewer = document.getElementById('viewerContainer');
         const pages = document.getElementById('viewer');
         let ticking = false;
-        let transform = {
-            translate : {
-                x : 0, 
-                y : 0
-            }
-        };
+        let transform = {};
+        let pagesPosition = {
+            x : 0,
+            y : 0
+        }
+
+        
         let timer;
 
         const hammertime = new Hammer.Manager(viewer);
@@ -438,7 +439,7 @@ See https://github.com/adobe-type-tools/cmap-resources
 
         hammertime.add(new Hammer.Swipe()).recognizeWith(hammertime.get('pan'));
         hammertime.on('swipe', onSwipe);
-        hammertime.on('pan', onPan);
+        //hammertime.on('pan', onPan);
 
         function onSwipe(ev){
             //pan swipe로 reconizerWith 후 디렉션 분리 
@@ -455,13 +456,15 @@ See https://github.com/adobe-type-tools/cmap-resources
             // } 
         }
 
+
+
         function onPan(ev){
             //target이 문제다 
             
             // console.log(pages[0].offsetWidth)
-            console.log(transform)
-            const START_X = transform.translate.x;
-            const START_Y = transform.translate.y;
+            console.log(ev)
+            const START_X = pagesPosition.x;
+            const START_Y = pagesPosition.y;
             //console.log(START_X)
 
             //console.log(START_X)
@@ -471,8 +474,6 @@ See https://github.com/adobe-type-tools/cmap-resources
             transform.translate = {
                 x : START_X + ev.deltaX,
                 y : START_Y + ev.deltaY
-                // x: START_X + ev.deltaX,
-                // y: START_Y + ev.deltaY
             }; 
 
            // console.log(transform.translate.x)
