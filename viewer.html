@@ -420,22 +420,15 @@ See https://github.com/adobe-type-tools/cmap-resources
     <script>
         const viewer = document.getElementById('viewerContainer');
         const pages = document.getElementById('viewer');
+        
         let ticking = false; //Flag for throttling
         let transform = {
             translate : { x : 0, y : 0},
             scale : 1,
-            angle : 0,
-            rx : 0,
-            ry : 0,
-            rz : 0
         }; //transform value
         let initTransform = {
 	        translate: { x: 0, y: 0 },
 	        scale: 1,
-	        angle: 0,
-	        rx: 0,
-	        ry: 0,
-	        rz: 0
 	    };
 
         
@@ -472,8 +465,7 @@ See https://github.com/adobe-type-tools/cmap-resources
         function updateElementTransform() {
             var value = [
                 'translate3d(' + transform.translate.x + 'px, ' + transform.translate.y + 'px, 0)',
-                'scale(' + transform.scale + ', ' + transform.scale + ')',
-                'rotate3d('+ transform.rx +','+ transform.ry +','+ transform.rz +','+  transform.angle + 'deg)'
+                'scale(' + transform.scale + ', ' + transform.scale + ')'
             ];
 
             value = value.join(" ");
@@ -491,16 +483,24 @@ See https://github.com/adobe-type-tools/cmap-resources
         }
 
         function savePosition(){
-            pos = pages.style.transform;
-            console.log(pos)
-            // initTransform = {
-            //     translate: { x: pos.x, y: pos.y },
-            //     scale: pos.scale,
-            //     angle: pos.angle,
-            //     rx: pos.rx,
-            //     ry: pos.ry,
-            //     rz: pos.rz
-            // }
+            const posString = pages.style.transform;
+            if(posString){
+                const posArr = posString.split(/(translate3d|scale)/gi);
+                const posValue = [];
+                posArr.splice(1).forEach(e => {
+                    if((/^\(/).test(e)){ //value
+                        posValue.push(e.replace(/[\(\s\)|px]+/g,'').split(',').map(e => Number(e)));
+                        
+                    }
+                })
+                //console.log(posValue)
+                initTransform = {
+                    translate : {x : posValue[0][0], y : posValue[0][1]},
+                    scale : posValue[1][0]
+                }
+                console.log(initTransform)
+            }
+            
         }
 
 
