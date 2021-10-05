@@ -418,229 +418,47 @@ See https://github.com/adobe-type-tools/cmap-resources
     <div id="printContainer"></div>
     <script src="libs/hammer.min.js"></script>
     <script>
-        const viewer = document.getElementById('viewerContainer');
-        const pages = document.getElementById('viewer');
-        let ticking = false;
-        let transform = {};
-        let pagesPosition = {
-            x : 0,
-            y : 0
-        }
-
         
-        let timer;
+        const viewer = document.getElementById('viewerContainer');
 
-        const hammertime = new Hammer.Manager(viewer);
+        const hammertime = new Hammer(viewer, {
+            touchAction: 'pan-y'
+        });
+        hammertime.get('pinch').set({
+            enable: true
+        })
 
-        hammertime.add(new Hammer.Pan({
-            threshold : 0,
-            pointer : 0
-        }));
+        hammertime.on('swipe pinchin pinchout', function(ev) {
+            if (ev.type === 'swipe') {
+                const isScaleOver = document.querySelector('.page').clientWidth > viewer.clientWidth;
+                if (isScaleOver) return;
 
-        hammertime.add(new Hammer.Swipe()).recognizeWith(hammertime.get('pan'));
-        hammertime.on('swipe', onSwipe);
-        //hammertime.on('pan', onPan);
+                if (ev.offsetDirection === 2) {
+                    PDFViewerApplication.pdfViewer.nextPage();
+                } else {
+                    PDFViewerApplication.pdfViewer.previousPage();
+                }
+            }
 
-        function onSwipe(ev){
-            //pan swipe로 reconizerWith 후 디렉션 분리 
-            console.log('swipe',ev)
-            const isScaleOver = document.querySelector('.page').clientWidth > viewer.clientWidth;
-            // const direction = (ev.offsetDirection === 2 || ev.offsetDirection === 8) ? 'next' : 'previous'; 
-            // console.log(direction, ev.offsetDirection)
-            if (isScaleOver) return;
-
-            // if (direction === 'next') {
-            //     PDFViewerApplication.pdfViewer.nextPage();
-            // } else {
-            //     PDFViewerApplication.pdfViewer.previousPage();
-            // } 
-        }
-
-
-
-        function onPan(ev){
-            //target이 문제다 
-            
-            // console.log(pages[0].offsetWidth)
-            console.log(ev)
-            const START_X = pagesPosition.x;
-            const START_Y = pagesPosition.y;
-            //console.log(START_X)
-
-            //console.log(START_X)
-
-            
-
-            transform.translate = {
-                x : START_X + ev.deltaX,
-                y : START_Y + ev.deltaY
-            }; 
-
-           // console.log(transform.translate.x)
-
-            let value = [
-                'translate3d(' + transform.translate.x + 'px, ' + transform.translate.y + 'px, 0)',
-                // 'scale(' + transform.scale + ', ' + transform.scale + ')',
-                // 'rotate3d('+ transform.rx +','+ transform.ry +','+ transform.rz +','+  transform.angle + 'deg)'
-            ];
-
-            //console.log(ev.target)
-            
-            value = value.join(" ");
-
-            
-            pages.style.transform = value;
-
-            // ev.target.style.webkitTransform = value;
-            // ev.target.mozTransform = value;
-            // pages.forEach(e => {
-            //     e.style.transform = value;
-            // })
-            // ev.target.style.transform = value;
-            // ticking = false;
-
-        }
-
-        // (function(module, exports, __webpack__require__) {
-
-        //     const viewer = document.getElementById('viewerContainer');
-        //     const hammertime = new Hammer.Manager(viewer);
-
-        //     hammertime.add(new Hammer.Pan({
-        //         threshold: 0,
-        //         pointer: 0
-        //     }));
-
-        //     hammertime.add(new Hammer.Swipe()).recognizeWith(hammertime.get('pan'));
-        //     // hammertime.add(new Hammer.Rotate({
-        //     //     threshold: 0
-        //     // })).recognizeWith(hammertime.get('pan'));
-        //     hammertime.add(new Hammer.Pinch({
-        //         threshold: 0
-        //     })).recognizeWith(hammertime.get('pan'));
-            
-        //     // hammertime.on("panstart panmove", onPan);
-        //     // hammertime.on("rotatestart rotatemove", onRotate);
-        //     hammertime.on("pinchstart pinchmove", onPinch);
-        //     hammertime.on("swipe", onSwipe);
-
-        //     function updateElementTransform() {
-        //         var value = [
-        //             'translate3d(' + transform.translate.x + 'px, ' + transform.translate.y + 'px, 0)',
-        //             'scale(' + transform.scale + ', ' + transform.scale + ')',
-        //             'rotate3d(' + transform.rx + ',' + transform.ry + ',' + transform.rz + ',' + transform.angle + 'deg)'
-        //         ];
-
-        //         value = value.join(" ");
-        //         el.style.webkitTransform = value;
-        //         el.style.mozTransform = value;
-        //         el.style.transform = value;
-        //         ticking = false;
-        //     }
-
-        //     function requestElementUpdate() {
-        //         if (!ticking) {
-        //             reqAnimationFrame(updateElementTransform);
-        //             ticking = true;
-        //         }
-        //     }
-
-        //     function onPan(ev) {
-        //         el.className = '';
-        //         transform.translate = {
-        //             x: START_X + ev.deltaX,
-        //             y: START_Y + ev.deltaY
-        //         };
-
-        //         logEvent(ev);
-        //         requestElementUpdate();
-        //     }
-
-        //     var initScale = 1;
-
-        //     function onPinch(ev) {
-        //         if (ev.type == 'pinchstart') {
-        //             initScale = transform.scale || 1;
-        //         }
-
-        //         el.className = '';
-        //         transform.scale = initScale * ev.scale;
-
-        //         logEvent(ev);
-        //         requestElementUpdate();
-        //     }
-
-        //     var initAngle = 0;
-
-        //     function onRotate(ev) {
-        //         if (ev.type == 'rotatestart') {
-        //             initAngle = transform.angle || 0;
-        //         }
-
-        //         el.className = '';
-        //         transform.rz = 1;
-        //         transform.angle = initAngle + ev.rotation;
-
-        //         logEvent(ev);
-        //         requestElementUpdate();
-        //     }
-
-        //     function onSwipe(ev) {
-        //         var angle = 50;
-        //         transform.ry = (ev.direction & Hammer.DIRECTION_HORIZONTAL) ? 1 : 0;
-        //         transform.rx = (ev.direction & Hammer.DIRECTION_VERTICAL) ? 1 : 0;
-        //         transform.angle = (ev.direction & (Hammer.DIRECTION_RIGHT | Hammer.DIRECTION_UP)) ? angle : -angle;
-
-                
-
-        //         logEvent(ev);
-        //         requestElementUpdate();
-        //     }
-
-            
-
-            
-        // })
-        // const viewer = document.getElementById('viewerContainer');
-
-        // const hammertime = new Hammer(viewer, {
-        //     touchAction: 'pan-y'
-        // });
-        // hammertime.get('pinch').set({
-        //     enable: true
-        // })
-
-        // hammertime.on('swipe pinchin pinchout', function(ev) {
-        //     if (ev.type === 'swipe') {
-        //         const isScaleOver = document.querySelector('.page').clientWidth > viewer.clientWidth;
-        //         if (isScaleOver) return;
-
-        //         if (ev.offsetDirection === 2) {
-        //             PDFViewerApplication.pdfViewer.nextPage();
-        //         } else {
-        //             PDFViewerApplication.pdfViewer.previousPage();
-        //         }
-        //     }
-
-        //     //TODO 0. 핀치 방법 변경 , zoomEvent 말고 새로 만들어야 함 
-        //     //최적화에 대한 작업 필요함 
-        //     //TODO 1. 핀치 시 touch-Action에 관한 조정 (pan-y -> none 에 대한 처리 , 스크롤링 해결법)
-        //     //      방안 1: pinchEnd 시 pan-y로 변경, pinchStart 시 touch-action 을 none 으로 변경함 
-        //     //      방안 2: default touch-action에 대하여, none으로 따르되, pan이벤트를 바인딩하여, 트랜스폼 좌표값을 이동하여 객체를
-        //     //             확인 할 수록 새로 작성 (스크롤링을 사용하지 않음에 대한 방안 , 문제점 : swipe이벤트와의 호환 및 앵글에 대한 미묘한 차이존재)
-        //     //TODO 2. 핀치 시 ticks에 대한 조절, 현재 pdfViewer의 zoomEvent 함수를 사용하고 있음, 분석필요.
-        //     //      방안 1 : ticks매개 변수에 대한 조절, 핀치 거리에 따른 호출
-        //     //      방안 2 : 기존 zoom event 미사용 새로 작성 
-        //     //TODO 3. 코드정리 viewer.js 구조 내에 삽입할 것인지 , 별도 라이브러리를 만들것인지에 대한 여부 
-        //     //TODO 4. 디바이스 테스트  
-        //     if (ev.additionalEvent === 'pinchout') {
-        //         PDFViewerApplication.zoomIn(1)
-        //     } else if (ev.additionalEvent === 'pinchin') {
-        //         const isScaleOver = document.querySelector('.page').clientWidth < viewer.clientWidth;
-        //         if (isScaleOver) return;
-        //         PDFViewerApplication.zoomOut(1)
-        //     }
-        // })
+            //TODO 0. 핀치 방법 변경 , zoomEvent 말고 새로 만들어야 함 
+            //최적화에 대한 작업 필요함 
+            //TODO 1. 핀치 시 touch-Action에 관한 조정 (pan-y -> none 에 대한 처리 , 스크롤링 해결법)
+            //      방안 1: pinchEnd 시 pan-y로 변경, pinchStart 시 touch-action 을 none 으로 변경함 
+            //      방안 2: default touch-action에 대하여, none으로 따르되, pan이벤트를 바인딩하여, 트랜스폼 좌표값을 이동하여 객체를
+            //             확인 할 수록 새로 작성 (스크롤링을 사용하지 않음에 대한 방안 , 문제점 : swipe이벤트와의 호환 및 앵글에 대한 미묘한 차이존재)
+            //TODO 2. 핀치 시 ticks에 대한 조절, 현재 pdfViewer의 zoomEvent 함수를 사용하고 있음, 분석필요.
+            //      방안 1 : ticks매개 변수에 대한 조절, 핀치 거리에 따른 호출
+            //      방안 2 : 기존 zoom event 미사용 새로 작성 
+            //TODO 3. 코드정리 viewer.js 구조 내에 삽입할 것인지 , 별도 라이브러리를 만들것인지에 대한 여부 
+            //TODO 4. 디바이스 테스트  
+            if (ev.additionalEvent === 'pinchout') {
+                PDFViewerApplication.zoomIn(1)
+            } else if (ev.additionalEvent === 'pinchin') {
+                const isScaleOver = document.querySelector('.page').clientWidth < viewer.clientWidth;
+                if (isScaleOver) return;
+                PDFViewerApplication.zoomOut(1)
+            }
+        })
     </script>
 </body>
 
