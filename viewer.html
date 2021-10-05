@@ -420,12 +420,23 @@ See https://github.com/adobe-type-tools/cmap-resources
     <script>
         const viewer = document.getElementById('viewerContainer');
         const pages = document.getElementById('viewer');
-        let ticking = false;
-        let transform = {};
-        let pagesPosition = {
-            x : 0,
-            y : 0
-        }
+        let ticking = false; //Flag for throttling
+        let transform = {
+            translate : { x : 0, y : 0},
+            scale : 1,
+            angle : 0,
+            rx : 0,
+            ry : 0,
+            rz : 0
+        }; //transform value
+        let initTransform = {
+	        translate: { x: 0, y: 0 },
+	        scale: 1,
+	        angle: 0,
+	        rx: 0,
+	        ry: 0,
+	        rz: 0
+	    };
 
         
         let timer;
@@ -439,7 +450,37 @@ See https://github.com/adobe-type-tools/cmap-resources
 
         hammertime.add(new Hammer.Swipe()).recognizeWith(hammertime.get('pan'));
         hammertime.on('swipe', onSwipe);
-        //hammertime.on('pan', onPan);
+        hammertime.on('pan', onPan);
+
+        function requestElementUpdate() {
+            if(!ticking) {
+                reqAnimationFrame(updateElementTransform);
+                ticking = true;
+            }
+        }
+
+        function updateElementTransform() {
+            var value = [
+                'translate3d(' + transform.translate.x + 'px, ' + transform.translate.y + 'px, 0)',
+                'scale(' + transform.scale + ', ' + transform.scale + ')',
+                'rotate3d('+ transform.rx +','+ transform.ry +','+ transform.rz +','+  transform.angle + 'deg)'
+            ];
+
+            value = value.join(" ");
+            pages.style.webkitTransform = value;
+            pages.style.mozTransform = value;
+            pages.style.transform = value;
+            ticking = false;
+        }
+
+        function requestElementUpdate() {
+            if(!ticking) {
+                reqAnimationFrame(updateElementTransform);
+                ticking = true;
+            }
+        }
+
+
 
         function onSwipe(ev){
             //pan swipe로 reconizerWith 후 디렉션 분리 
@@ -458,47 +499,16 @@ See https://github.com/adobe-type-tools/cmap-resources
 
 
 
-        function onPan(ev){
-            //target이 문제다 
-            
-            // console.log(pages[0].offsetWidth)
-            console.log(ev)
-            const START_X = pagesPosition.x;
-            const START_Y = pagesPosition.y;
-            //console.log(START_X)
-
-            //console.log(START_X)
-
-            
+        function onPan(ev) {
+            const START_X = initTransform.translate.x;
+            const START_Y = initTransform.translate.y;
 
             transform.translate = {
-                x : START_X + ev.deltaX,
-                y : START_Y + ev.deltaY
-            }; 
+                x: START_X + ev.deltaX,
+                y: START_Y + ev.deltaY
+            };
 
-           // console.log(transform.translate.x)
-
-            let value = [
-                'translate3d(' + transform.translate.x + 'px, ' + transform.translate.y + 'px, 0)',
-                // 'scale(' + transform.scale + ', ' + transform.scale + ')',
-                // 'rotate3d('+ transform.rx +','+ transform.ry +','+ transform.rz +','+  transform.angle + 'deg)'
-            ];
-
-            //console.log(ev.target)
-            
-            value = value.join(" ");
-
-            
-            pages.style.transform = value;
-
-            // ev.target.style.webkitTransform = value;
-            // ev.target.mozTransform = value;
-            // pages.forEach(e => {
-            //     e.style.transform = value;
-            // })
-            // ev.target.style.transform = value;
-            // ticking = false;
-
+            requestElementUpdate();
         }
 
         // (function(module, exports, __webpack__require__) {
