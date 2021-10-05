@@ -452,7 +452,8 @@ See https://github.com/adobe-type-tools/cmap-resources
         hammertime.on('swipe', onSwipe);
         hammertime.on('pan', onPan);
 
-        viewer.addEventListener('touchstart touchend', savePosition)
+        viewer.addEventListener('touchstart', savePosition);
+        viewer.addEventListener('touchend', savePosition);
 
         // polyfill
         var reqAnimationFrame = (function () {
