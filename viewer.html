@@ -418,10 +418,11 @@ See https://github.com/adobe-type-tools/cmap-resources
     <div id="printContainer"></div>
     <script src="libs/hammer.min.js"></script>
     <script>
+        //pan의 경우 새로 페이지 이동이 안되어야 하기때문에... 확대 되었을때만 가능하게 해당 사이즈 만큼만 가능하게 하고, 그 이상은 안되도록 막아야함 
         const viewer = document.getElementById('viewerContainer');
         const pages = document.getElementById('viewer');
         
-        let ticking = false; //Flag for throttling
+        let ticking = false; 
         let transform = {
             translate : { x : 0, y : 0},
             scale : 1,
@@ -431,7 +432,6 @@ See https://github.com/adobe-type-tools/cmap-resources
 	        scale: 1,
 	    };
 
-        
         let timer;
 
         const hammertime = new Hammer.Manager(viewer);
@@ -445,7 +445,6 @@ See https://github.com/adobe-type-tools/cmap-resources
         hammertime.on('swipe', onSwipe);
         hammertime.on('pan', onPan);
 
-        viewer.addEventListener('touchstart', savePosition);
         viewer.addEventListener('touchend', savePosition);
 
         // polyfill
@@ -493,41 +492,58 @@ See https://github.com/adobe-type-tools/cmap-resources
                         
                     }
                 })
-                //console.log(posValue)
+                
                 initTransform = {
-                    translate : {x : posValue[0][0], y : posValue[0][1]},
+                    translate : { x : posValue[0][0], y : posValue[0][1] },
                     scale : posValue[1][0]
                 }
-                console.log(initTransform)
+                console.log(PDFViewerApplication.pdfViewer.currentPageNumber)
             }
             
         }
 
 
         function onSwipe(ev){
-            //pan swipe로 reconizerWith 후 디렉션 분리 
-            //console.log('swipe',ev)
+            //화면 크기보다 확대 된 경우, swipe중지
             const isScaleOver = document.querySelector('.page').clientWidth > viewer.clientWidth;
-            // const direction = (ev.offsetDirection === 2 || ev.offsetDirection === 8) ? 'next' : 'previous'; 
-            // console.log(direction, ev.offsetDirection)
             if (isScaleOver) return;
 
-            // if (direction === 'next') {
-            //     PDFViewerApplication.pdfViewer.nextPage();
-            // } else {
-            //     PDFViewerApplication.pdfViewer.previousPage();
-            // } 
+            //swipeLeft, swipeDown 시 다음페이지, swipeRigth, swipeUp 시 이전페이지
+            const direction = (ev.offsetDirection === 2 || ev.offsetDirection === 8) ? 'next' : 'previous'; 
+
+            if (direction === 'next') {
+                PDFViewerApplication.pdfViewer.nextPage();
+            } else {
+                PDFViewerApplication.pdfViewer.previousPage();
+            } 
         }
 
 
 
         function onPan(ev) {
-            console.log(ev)
+            //PDFViewerApplication.pdfViewer.currentScale = 2.0;
+            //const currentPageNumber = PDFViewerApplication.pdfViewer.currentPageNumber;
+
+            //화면 크기보다 축소된 경우, pan 중지 
+            const isScaleUnder = document.querySelector('.page').clientWidth < viewer.clientWidth;
+            if(isScaleUnder) return;
+
+            const page = document.querySelector('.page');
+            const limitPos = {
+                x : page.offsetWidth - viewer.offsetWidth,
+                //y : page.offsetHeight * currentPageNumber / 2
+            }
             const START_X = initTransform.translate.x;
             const START_Y = initTransform.translate.y;
 
+            // x 양수 리밋은 0 , 음수 리밋은 가로사이즈 남는만큼 -(page.offsetWidth - viewer.offsetWidth)
+            // y 양수 리밋은 페이지의 상단 , 음수 리밋은 페이지 하단
+            // START_X + ev.deltaX 값이 limitPos보다 작으면, -limitPos , START_X + ev.deltaX 값이 0보다 크면 0 , 그 외에는 START_X + ev.delta
+            const nextX = START_X + ev.deltaX > 0 ? 0 : (START_X + ev.deltaX < -limitPos.x ? -limitPos.x : START_X + ev.deltaX)
+
+            console.log(nextX)
             transform.translate = {
-                x: START_X + ev.deltaX,
+                x: nextX,  
                 y: START_Y + ev.deltaY
             };
 
