@@ -418,7 +418,19 @@ See https://github.com/adobe-type-tools/cmap-resources
     <div id="printContainer"></div>
     <script src="libs/hammer.min.js"></script>
     <script>
-        //pan의 경우 새로 페이지 이동이 안되어야 하기때문에... 확대 되었을때만 가능하게 해당 사이즈 만큼만 가능하게 하고, 그 이상은 안되도록 막아야함 
+        // mobile전용 
+        // const userAgent = typeof navigator !== "undefined" && navigator.userAgent || "";
+        // const platform = typeof navigator !== "undefined" && navigator.platform || "";
+        // const maxTouchPoints = typeof navigator !== "undefined" && navigator.maxTouchPoints || 1;
+        // const isAndroid = /Android/.test(userAgent);
+        // const isIOS = /\b(iPad|iPhone|iPod)(?=;)/.test(userAgent); 
+        // const isIOSChrome = /CriOS/.test(userAgent);
+
+        // if(isAndroid || isIOS || isIOSChrome){
+        //     //이 경우 실행 
+        // }
+
+        //pan의 경우 세로 페이지 이동이 안되어야 하기때문에... 확대 되었을때만 가능하게 해당 사이즈 만큼만 가능하게 하고, 그 이상은 안되도록 막아야함 
         const viewer = document.getElementById('viewerContainer');
         const pages = document.getElementById('viewer');
         
@@ -518,11 +530,9 @@ See https://github.com/adobe-type-tools/cmap-resources
             } 
         }
 
-
-
         function onPan(ev) {
             //PDFViewerApplication.pdfViewer.currentScale = 2.0;
-            //const currentPageNumber = PDFViewerApplication.pdfViewer.currentPageNumber;
+            const currentPageNumber = PDFViewerApplication.pdfViewer.currentPageNumber;
 
             //화면 크기보다 축소된 경우, pan 중지 
             const isScaleUnder = document.querySelector('.page').clientWidth < viewer.clientWidth;
@@ -531,20 +541,24 @@ See https://github.com/adobe-type-tools/cmap-resources
             const page = document.querySelector('.page');
             const limitPos = {
                 x : page.offsetWidth - viewer.offsetWidth,
-                //y : page.offsetHeight * currentPageNumber / 2
+                y : page.offsetHeight - viewer.offsetHeight
             }
             const START_X = initTransform.translate.x;
             const START_Y = initTransform.translate.y;
 
-            // x 양수 리밋은 0 , 음수 리밋은 가로사이즈 남는만큼 -(page.offsetWidth - viewer.offsetWidth)
-            // y 양수 리밋은 페이지의 상단 , 음수 리밋은 페이지 하단
+            // x 양수 리밋은 0 , 음수 리밋은 가로사이즈 남는만큼 절댓값 limitPos.x
+            // y 양수 리밋은 페이지의 상단 limitPos.y * currentPageNumber - 1 , 음수 리밋은 페이지 하단 limitPos.y * currentPageNumber
             // START_X + ev.deltaX 값이 limitPos보다 작으면, -limitPos , START_X + ev.deltaX 값이 0보다 크면 0 , 그 외에는 START_X + ev.delta
-            const nextX = START_X + ev.deltaX > 0 ? 0 : (START_X + ev.deltaX < -limitPos.x ? -limitPos.x : START_X + ev.deltaX)
-
+            const nextX = START_X + ev.deltaX > 0 ? 
+                                                0 : 
+                                                (START_X + ev.deltaX < -limitPos.x ? -limitPos.x : START_X + ev.deltaX)
+            const nextY = START_Y + ev.deltaY > limitPos.y * (currentPageNumber - 1) ? 
+                                                limitPos.y * (currentPageNumber - 1) : 
+                                                (START_Y + ev.deltaX < -limitPos.y * currentPageNumber ? -limitPos.y * currentPageNumber : START_Y + ev.delatY)
             console.log(nextX)
             transform.translate = {
                 x: nextX,  
-                y: START_Y + ev.deltaY
+                y: nextY
             };
 
             requestElementUpdate();
