@@ -554,8 +554,9 @@ See https://github.com/adobe-type-tools/cmap-resources
                                                 (START_X + ev.deltaX < -limitPos.x ? -limitPos.x : START_X + ev.deltaX)
             const nextY = START_Y + ev.deltaY > limitPos.y * (currentPageNumber - 1) ? 
                                                 limitPos.y * (currentPageNumber - 1) : 
-                                                (START_Y + ev.deltaX < -limitPos.y * currentPageNumber ? -limitPos.y * currentPageNumber : START_Y + ev.delatY)
-            console.log(nextX)
+                                                (START_Y + ev.deltaY < -limitPos.y * currentPageNumber ? -limitPos.y * currentPageNumber : START_Y + ev.deltaY)
+            
+            console.log()
             transform.translate = {
                 x: nextX,  
                 y: nextY
