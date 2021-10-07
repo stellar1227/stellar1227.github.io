@@ -454,7 +454,7 @@ See https://github.com/adobe-type-tools/cmap-resources
         }));
 
         hammertime.add(new Hammer.Swipe()).recognizeWith(hammertime.get('pan'));
-        hammertime.add(new Hammer.Pinch({ threshold: 0 })).recognizeWith(mc.get('pan'));
+        hammertime.add(new Hammer.Pinch({ threshold: 0 })).recognizeWith(hammertime.get('pan'));
         hammertime.on('swipe', onSwipe);
         hammertime.on('pan', onPan);
         hammertime.on('pinchstart pinchmove', onPinch);
