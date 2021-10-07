@@ -562,6 +562,9 @@ See https://github.com/adobe-type-tools/cmap-resources
 
         function onPinch(ev){
             console.log(ev)
+            const initScale = initTransform.scale;
+            transform.scale = ev.scale * initScale;
+            requestElementUpdate();
         }
         // (function(module, exports, __webpack__require__) {
 
