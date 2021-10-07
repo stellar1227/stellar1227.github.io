@@ -454,8 +454,11 @@ See https://github.com/adobe-type-tools/cmap-resources
         }));
 
         hammertime.add(new Hammer.Swipe()).recognizeWith(hammertime.get('pan'));
+        hammertime.add(new Hammer.Pinch({ threshold: 0 })).recognizeWith(mc.get('pan'));
         hammertime.on('swipe', onSwipe);
         hammertime.on('pan', onPan);
+        hammertime.on('pinchstart pinchmove', onPinch);
+
 
         viewer.addEventListener('touchend', savePosition);
 
@@ -486,12 +489,6 @@ See https://github.com/adobe-type-tools/cmap-resources
             ticking = false;
         }
 
-        function requestElementUpdate() {
-            if(!ticking) {
-                reqAnimationFrame(updateElementTransform);
-                ticking = true;
-            }
-        }
 
         function savePosition(){
             const posString = pages.style.transform;
@@ -555,8 +552,6 @@ See https://github.com/adobe-type-tools/cmap-resources
             const nextY = START_Y + ev.deltaY > limitPos.y * (currentPageNumber - 1) ? 
                                                 limitPos.y * (currentPageNumber - 1) : 
                                                 (START_Y + ev.deltaY < -limitPos.y * currentPageNumber ? -limitPos.y * currentPageNumber : START_Y + ev.deltaY)
-            
-            console.log()
             transform.translate = {
                 x: nextX,  
                 y: nextY
@@ -565,6 +560,9 @@ See https://github.com/adobe-type-tools/cmap-resources
             requestElementUpdate();
         }
 
+        function onPinch(ev){
+            console.log(ev)
+        }
         // (function(module, exports, __webpack__require__) {
 
         //     const viewer = document.getElementById('viewerContainer');
