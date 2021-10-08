@@ -561,9 +561,21 @@ See https://github.com/adobe-type-tools/cmap-resources
         }
 
         function onPinch(ev){
-            const initScale = initTransform.scale;
-            transform.scale = ev.scale * initScale;
-            PDFViewerApplication.pdfViewer.currentScale = transform.scale;
+            console.log(ev)
+            //pinch 시 maxScale 고려 해야하고, 트랜스폼 조정 필요함. 
+            //onPan의 경우에 page 단위 트랜스 폼 필요함 
+            //아예 swiper.js로 해서 하는것도 고려해볼만하고, 
+            //로직을 변경해야할수도있음
+            // const initScale = initTransform.scale;
+            // transform.scale = ev.scale * initScale;
+            // PDFViewerApplication.pdfViewer.currentScale = transform.scale;
+            if (ev.additionalEvent === 'pinchout') {
+                PDFViewerApplication.zoomIn()
+            } else if (ev.additionalEvent === 'pinchin') {
+                const isScaleOver = document.querySelector('.page').clientWidth < viewer.clientWidth;
+                if (isScaleOver) return;
+                PDFViewerApplication.zoomOut()
+            }
             requestElementUpdate();
         }
         // (function(module, exports, __webpack__require__) {
