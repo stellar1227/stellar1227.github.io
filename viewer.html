@@ -510,7 +510,7 @@ See https://github.com/adobe-type-tools/cmap-resources
             }
             
         }
-
+        
 
         function onSwipe(ev){
             //화면 크기보다 확대 된 경우, swipe중지
@@ -576,6 +576,9 @@ See https://github.com/adobe-type-tools/cmap-resources
                 if (isScaleOver) return;
                 PDFViewerApplication.zoomOut()
             }
+
+            initTransform.translate.x = 0;
+            initTransform.translate.y = 0;
             
         }
         // (function(module, exports, __webpack__require__) {
