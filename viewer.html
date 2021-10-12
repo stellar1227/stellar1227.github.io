@@ -569,14 +569,18 @@ See https://github.com/adobe-type-tools/cmap-resources
             // const initScale = initTransform.scale;
             // transform.scale = ev.scale * initScale;
             // PDFViewerApplication.pdfViewer.currentScale = transform.scale;
-            if (ev.additionalEvent === 'pinchout') {
-                PDFViewerApplication.zoomIn()
-            } else if (ev.additionalEvent === 'pinchin') {
-                const isScaleOver = document.querySelector('.page').clientWidth < viewer.clientWidth;
-                if (isScaleOver) return;
-                PDFViewerApplication.zoomOut()
+            // if (ev.additionalEvent === 'pinchout') {
+            //     PDFViewerApplication.zoomIn()
+            // } else if (ev.additionalEvent === 'pinchin') {
+            //     const isScaleOver = document.querySelector('.page').clientWidth < viewer.clientWidth;
+            //     if (isScaleOver) return;
+            //     PDFViewerApplication.zoomOut()
+            // }
+            
+            if(ev.type === 'pinchend'){
+                transform.scale = ev.scale * initTransform.scale;
+                requestElementUpdate();
             }
-            requestElementUpdate();
         }
         // (function(module, exports, __webpack__require__) {
 
