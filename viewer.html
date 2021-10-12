@@ -446,7 +446,7 @@ See https://github.com/adobe-type-tools/cmap-resources
 
         let timer;
 
-        const hammertime = new Hammer.Manager(viewer, {touchAction : 'pan-x pan-y'});
+        const hammertime = new Hammer.Manager(viewer);
 
         hammertime.add(new Hammer.Pan({
             threshold : 0,
@@ -456,7 +456,7 @@ See https://github.com/adobe-type-tools/cmap-resources
         hammertime.add(new Hammer.Swipe()).recognizeWith(hammertime.get('pan'));
         hammertime.add(new Hammer.Pinch({ threshold: 0 })).recognizeWith(hammertime.get('pan'));
         hammertime.on('swipe', onSwipe);
-        //hammertime.on('pan', onPan);
+        hammertime.on('pan', onPan);
         hammertime.on('pinchstart pinchmove', onPinch);
 
 
@@ -569,11 +569,13 @@ See https://github.com/adobe-type-tools/cmap-resources
             // const initScale = initTransform.scale;
             // transform.scale = ev.scale * initScale;
             // PDFViewerApplication.pdfViewer.currentScale = transform.scale;
-            // if(ev.type === 'pinchstart'){
-            //     hammertime.Manager({touchAction : 'pan-x, pan-y'})
-            // }
-            transform.scale = ev.scale * initTransform.scale;
-            PDFViewerApplication.pdfViewer.currentScale = transform.scale;
+            if (ev.additionalEvent === 'pinchout') {
+                PDFViewerApplication.zoomIn()
+            } else if (ev.additionalEvent === 'pinchin') {
+                const isScaleOver = document.querySelector('.page').clientWidth < viewer.clientWidth;
+                if (isScaleOver) return;
+                PDFViewerApplication.zoomOut()
+            }
             
         }
         // (function(module, exports, __webpack__require__) {
