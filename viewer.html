@@ -569,7 +569,7 @@ See https://github.com/adobe-type-tools/cmap-resources
             // const initScale = initTransform.scale;
             // transform.scale = ev.scale * initScale;
             // PDFViewerApplication.pdfViewer.currentScale = transform.scale;
-            if(ev.type==='pinchend'){
+            if(ev.type==='pinchstart'){
                 transform.scale = ev.scale * initTransform.scale;
                 PDFViewerApplication.pdfViewer.currentScale = transform.scale;
             }
