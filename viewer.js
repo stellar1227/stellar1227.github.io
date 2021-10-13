@@ -382,6 +382,8 @@ var _pdf_viewer = __webpack_require__(27);
 
 var _secondary_toolbar = __webpack_require__(35);
 
+var _pdf_single_page_viewer = __webpack_require__(36);
+
 var _toolbar = __webpack_require__(37);
 
 var _viewer_compatibility = __webpack_require__(2);
@@ -669,7 +671,7 @@ const PDFViewerApplication = {
     }
   },
 
-  async _initializeViewerComponents() {
+  async _initializeViewerComponents() { //TODO : initializeViewer옵션 체크
     const appConfig = this.appConfig;
     const eventBus = appConfig.eventBus || new _ui_utils.EventBus({
       isInAutomation: this.externalServices.isInAutomation
@@ -702,7 +704,7 @@ const PDFViewerApplication = {
     this.pdfScriptingManager = pdfScriptingManager;
     const container = appConfig.mainContainer;
     const viewer = appConfig.viewerContainer;
-    this.pdfViewer = new _pdf_viewer.PDFViewer({
+    this.pdfViewer = new _pdf_single_page_viewer.PDFSinglePageViewer({
       container,
       viewer,
       eventBus,
@@ -721,6 +723,7 @@ const PDFViewerApplication = {
       maxCanvasPixels: _app_options.AppOptions.get("maxCanvasPixels"),
       enableScripting: _app_options.AppOptions.get("enableScripting")
     });
+    
     pdfRenderingQueue.setViewer(this.pdfViewer);
     pdfLinkService.setViewer(this.pdfViewer);
     pdfScriptingManager.setViewer(this.pdfViewer);
@@ -12714,8 +12717,6 @@ exports.SecondaryToolbar = void 0;
 var _ui_utils = __webpack_require__(4);
 
 var _pdf_cursor_tools = __webpack_require__(6);
-
-var _pdf_single_page_viewer = __webpack_require__(36);
 
 class SecondaryToolbar {
   constructor(options, mainContainer, eventBus) {
