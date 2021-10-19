@@ -13620,7 +13620,7 @@
           "scrollModeOnLoad": -1,
           "spreadModeOnLoad": -1,
           "textLayerMode": 1,
-          "useOnlyCssZoom": false,
+          "useOnlyCssZoom": true,
           "viewerCssTheme": 0,
           "viewOnLoad": 0,
           "disableAutoFetch": false,

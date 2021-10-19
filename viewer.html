@@ -424,8 +424,8 @@ See https://github.com/adobe-type-tools/cmap-resources
         
         const hammertime = new Hammer(viewer);
 
-        hammertime.on('swipe', onSwipe);
-        hammertime.get('pinch').set({ enable: true , touchAction : 'pan-x pan-y'});
+        //hammertime.on('swipe', onSwipe);
+        hammertime.get('pinch').set({ enable: true});
         hammertime.on('pinchstart pinchmove pinchend', onPinch)
 
         function onSwipe(ev){
@@ -444,7 +444,11 @@ See https://github.com/adobe-type-tools/cmap-resources
         }
 
         function onPinch(ev){
-            console.log(ev)
+            if(ev.type === 'pinchmove'){
+                if(ev.additionalEvent === 'pinchout'){
+                    PDFViewerApplication.zoomOut();
+                }
+            }
         }
         // mobile전용 
         // const userAgent = typeof navigator !== "undefined" && navigator.userAgent || "";
