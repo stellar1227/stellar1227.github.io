@@ -422,7 +422,7 @@ See https://github.com/adobe-type-tools/cmap-resources
         const viewer = document.getElementById('viewerContainer');
         const pages = document.getElementById('.viewer')
         
-        const hammertime = new Hammer(viewer);
+        const hammertime = new Hammer(viewer, {touchAction : 'pan-x pan-y'});
 
         //hammertime.on('swipe', onSwipe);
         hammertime.get('pinch').set({ enable: true});
