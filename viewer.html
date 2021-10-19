@@ -422,10 +422,11 @@ See https://github.com/adobe-type-tools/cmap-resources
         const viewer = document.getElementById('viewerContainer');
         const pages = document.getElementById('.viewer')
         
-        const hammertime = new Hammer(viewer, {touchAction : 'auto'});
+        const hammertime = new Hammer(viewer);
 
-        //hammertime.on('swipe', onSwipe);
-        hammertime.on('pinch')
+        hammertime.on('swipe', onSwipe);
+        hammertime.get('pinch').set({ enable: true , touchAction : 'pan-x pan-y'});
+        hammertime.on('pinchstart pinchmove pinchend', onPinch)
 
         function onSwipe(ev){
             //화면 크기보다 확대 된 경우, swipe중지
@@ -440,6 +441,10 @@ See https://github.com/adobe-type-tools/cmap-resources
             } else {
                 PDFViewerApplication.pdfViewer.previousPage();
             } 
+        }
+
+        function onPinch(ev){
+            console.log(ev)
         }
         // mobile전용 
         // const userAgent = typeof navigator !== "undefined" && navigator.userAgent || "";
