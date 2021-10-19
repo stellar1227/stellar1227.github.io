@@ -418,99 +418,13 @@ See https://github.com/adobe-type-tools/cmap-resources
     <div id="printContainer"></div>
     <script src="libs/hammer.min.js"></script>
     <script>
-        // mobile전용 
-        // const userAgent = typeof navigator !== "undefined" && navigator.userAgent || "";
-        // const platform = typeof navigator !== "undefined" && navigator.platform || "";
-        // const maxTouchPoints = typeof navigator !== "undefined" && navigator.maxTouchPoints || 1;
-        // const isAndroid = /Android/.test(userAgent);
-        // const isIOS = /\b(iPad|iPhone|iPod)(?=;)/.test(userAgent); 
-        // const isIOSChrome = /CriOS/.test(userAgent);
-
-        // if(isAndroid || isIOS || isIOSChrome){
-        //     //이 경우 실행 
-        // }
-
-        //pan의 경우 세로 페이지 이동이 안되어야 하기때문에... 확대 되었을때만 가능하게 해당 사이즈 만큼만 가능하게 하고, 그 이상은 안되도록 막아야함 
+        //single-pdf-style로 실행 viewer.js
         const viewer = document.getElementById('viewerContainer');
-        const pages = document.getElementById('viewer');
+        const pages = document.getElementById('.viewer')
         
-        let ticking = false; 
-        let transform = {
-            translate : { x : 0, y : 0},
-            scale : 1,
-        }; //transform value
-        let initTransform = {
-	        translate: { x: 0, y: 0 },
-	        scale: 1,
-	    };
+        const hammertime = new Hammer(viewer, {touchAction : 'pan-x pan-y'});
 
-        let timer;
-
-        const hammertime = new Hammer.Manager(viewer);
-
-        hammertime.add(new Hammer.Pan({
-            threshold : 0,
-            pointer : 0
-        }));
-
-        hammertime.add(new Hammer.Swipe()).recognizeWith(hammertime.get('pan'));
-        hammertime.add(new Hammer.Pinch({ threshold: 0 })).recognizeWith(hammertime.get('pan'));
         hammertime.on('swipe', onSwipe);
-        hammertime.on('pan', onPan);
-        hammertime.on('pinchstart pinchmove', onPinch);
-
-
-        viewer.addEventListener('touchend', savePosition);
-
-        // polyfill
-        var reqAnimationFrame = (function () {
-            return window[Hammer.prefixed(window, 'requestAnimationFrame')] || function (callback) {
-                window.setTimeout(callback, 1000 / 60);
-            };
-        })();
-
-        function requestElementUpdate() {
-            if(!ticking) {
-                reqAnimationFrame(updateElementTransform);
-                ticking = true;
-            }
-        }
-
-        function updateElementTransform() {
-            var value = [
-                'translate3d(' + transform.translate.x + 'px, ' + transform.translate.y + 'px, 0)',
-                'scale(' + transform.scale + ', ' + transform.scale + ')'
-            ];
-
-            value = value.join(" ");
-            pages.style.webkitTransform = value;
-            pages.style.mozTransform = value;
-            pages.style.transform = value;
-            ticking = false;
-        }
-
-
-        function savePosition(){
-            const posString = pages.style.transform;
-            if(posString){
-                const posArr = posString.split(/(translate3d|scale)/gi);
-                const posValue = [];
-                posArr.splice(1).forEach(e => {
-                    if((/^\(/).test(e)){ //value
-                        posValue.push(e.replace(/[\(\s\)|px]+/g,'').split(',').map(e => Number(e)));
-                        
-                    }
-                })
-                
-                initTransform = {
-                    translate : { x : posValue[0][0], y : posValue[0][1] },
-                    scale : posValue[1][0]
-                }
-                console.log(PDFViewerApplication.pdfViewer.currentPageNumber)
-            }
-            
-        }
-        
 
         function onSwipe(ev){
             //화면 크기보다 확대 된 경우, swipe중지
@@ -526,178 +440,167 @@ See https://github.com/adobe-type-tools/cmap-resources
                 PDFViewerApplication.pdfViewer.previousPage();
             } 
         }
+        // mobile전용 
+        // const userAgent = typeof navigator !== "undefined" && navigator.userAgent || "";
+        // const platform = typeof navigator !== "undefined" && navigator.platform || "";
+        // const maxTouchPoints = typeof navigator !== "undefined" && navigator.maxTouchPoints || 1;
+        // const isAndroid = /Android/.test(userAgent);
+        // const isIOS = /\b(iPad|iPhone|iPod)(?=;)/.test(userAgent); 
+        // const isIOSChrome = /CriOS/.test(userAgent);
 
-        function onPan(ev) {
-            //PDFViewerApplication.pdfViewer.currentScale = 2.0;
-            const currentPageNumber = PDFViewerApplication.pdfViewer.currentPageNumber;
+        // if(isAndroid || isIOS || isIOSChrome){
+        //     //이 경우 실행 
+        // }
 
-            //화면 크기보다 축소된 경우, pan 중지 
-            const isScaleUnder = document.querySelector('.page').clientWidth < viewer.clientWidth;
-            if(isScaleUnder) return;
-
-            const page = document.querySelector('.page');
-            const limitPos = {
-                x : page.offsetWidth - viewer.offsetWidth,
-                y : page.offsetHeight - viewer.offsetHeight
-            }
-            const START_X = initTransform.translate.x;
-            const START_Y = initTransform.translate.y;
-
-            // x 양수 리밋은 0 , 음수 리밋은 가로사이즈 남는만큼 절댓값 limitPos.x
-            // y 양수 리밋은 페이지의 상단 limitPos.y * currentPageNumber - 1 , 음수 리밋은 페이지 하단 limitPos.y * currentPageNumber
-            // START_X + ev.deltaX 값이 limitPos보다 작으면, -limitPos , START_X + ev.deltaX 값이 0보다 크면 0 , 그 외에는 START_X + ev.delta
-            const nextX = START_X + ev.deltaX > 0 ? 
-                                                0 : 
-                                                (START_X + ev.deltaX < -limitPos.x ? -limitPos.x : START_X + ev.deltaX)
-            const nextY = START_Y + ev.deltaY > limitPos.y * (currentPageNumber - 1) ? 
-                                                limitPos.y * (currentPageNumber - 1) : 
-                                                (START_Y + ev.deltaY < -limitPos.y * currentPageNumber ? -limitPos.y * currentPageNumber : START_Y + ev.deltaY)
-            transform.translate = {
-                x: nextX,  
-                y: nextY
-            };
-
-            requestElementUpdate();
-        }
-
-        function onPinch(ev){
-            console.log(ev)
-            //pinch 시 maxScale 고려 해야하고, 트랜스폼 조정 필요함. 
-            //onPan의 경우에 page 단위 트랜스 폼 필요함 
-            //아예 swiper.js로 해서 하는것도 고려해볼만하고, 
-            //로직을 변경해야할수도있음
-            // const initScale = initTransform.scale;
-            // transform.scale = ev.scale * initScale;
-            // PDFViewerApplication.pdfViewer.currentScale = transform.scale;
-            if (ev.additionalEvent === 'pinchout') {
-                PDFViewerApplication.zoomIn()
-            } else if (ev.additionalEvent === 'pinchin') {
-                const isScaleOver = document.querySelector('.page').clientWidth < viewer.clientWidth;
-                if (isScaleOver) return;
-                PDFViewerApplication.zoomOut()
-            }
-            
-        }
-        // (function(module, exports, __webpack__require__) {
-
-        //     const viewer = document.getElementById('viewerContainer');
-        //     const hammertime = new Hammer.Manager(viewer);
-
-        //     hammertime.add(new Hammer.Pan({
-        //         threshold: 0,
-        //         pointer: 0
-        //     }));
-
-        //     hammertime.add(new Hammer.Swipe()).recognizeWith(hammertime.get('pan'));
-        //     // hammertime.add(new Hammer.Rotate({
-        //     //     threshold: 0
-        //     // })).recognizeWith(hammertime.get('pan'));
-        //     hammertime.add(new Hammer.Pinch({
-        //         threshold: 0
-        //     })).recognizeWith(hammertime.get('pan'));
-            
-        //     // hammertime.on("panstart panmove", onPan);
-        //     // hammertime.on("rotatestart rotatemove", onRotate);
-        //     hammertime.on("pinchstart pinchmove", onPinch);
-        //     hammertime.on("swipe", onSwipe);
-
-        //     function updateElementTransform() {
-        //         var value = [
-        //             'translate3d(' + transform.translate.x + 'px, ' + transform.translate.y + 'px, 0)',
-        //             'scale(' + transform.scale + ', ' + transform.scale + ')',
-        //             'rotate3d(' + transform.rx + ',' + transform.ry + ',' + transform.rz + ',' + transform.angle + 'deg)'
-        //         ];
-
-        //         value = value.join(" ");
-        //         el.style.webkitTransform = value;
-        //         el.style.mozTransform = value;
-        //         el.style.transform = value;
-        //         ticking = false;
-        //     }
-
-        //     function requestElementUpdate() {
-        //         if (!ticking) {
-        //             reqAnimationFrame(updateElementTransform);
-        //             ticking = true;
-        //         }
-        //     }
-
-        //     function onPan(ev) {
-        //         el.className = '';
-        //         transform.translate = {
-        //             x: START_X + ev.deltaX,
-        //             y: START_Y + ev.deltaY
-        //         };
-
-        //         logEvent(ev);
-        //         requestElementUpdate();
-        //     }
-
-        //     var initScale = 1;
-
-        //     function onPinch(ev) {
-        //         if (ev.type == 'pinchstart') {
-        //             initScale = transform.scale || 1;
-        //         }
-
-        //         el.className = '';
-        //         transform.scale = initScale * ev.scale;
-
-        //         logEvent(ev);
-        //         requestElementUpdate();
-        //     }
-
-        //     var initAngle = 0;
-
-        //     function onRotate(ev) {
-        //         if (ev.type == 'rotatestart') {
-        //             initAngle = transform.angle || 0;
-        //         }
-
-        //         el.className = '';
-        //         transform.rz = 1;
-        //         transform.angle = initAngle + ev.rotation;
-
-        //         logEvent(ev);
-        //         requestElementUpdate();
-        //     }
-
-        //     function onSwipe(ev) {
-        //         var angle = 50;
-        //         transform.ry = (ev.direction & Hammer.DIRECTION_HORIZONTAL) ? 1 : 0;
-        //         transform.rx = (ev.direction & Hammer.DIRECTION_VERTICAL) ? 1 : 0;
-        //         transform.angle = (ev.direction & (Hammer.DIRECTION_RIGHT | Hammer.DIRECTION_UP)) ? angle : -angle;
-
-                
-
-        //         logEvent(ev);
-        //         requestElementUpdate();
-        //     }
-
-            
-
-            
-        // })
+        //pan의 경우 세로 페이지 이동이 안되어야 하기때문에... 확대 되었을때만 가능하게 해당 사이즈 만큼만 가능하게 하고, 그 이상은 안되도록 막아야함 
         // const viewer = document.getElementById('viewerContainer');
+        // const pages = document.getElementById('viewer');
+        
+        // let ticking = false; 
+        // let transform = {
+        //     translate : { x : 0, y : 0},
+        //     scale : 1,
+        // }; //transform value
+        // let initTransform = {
+	    //     translate: { x: 0, y: 0 },
+	    //     scale: 1,
+	    // };
 
-        // const hammertime = new Hammer(viewer, {
-        //     touchAction: 'pan-y'
-        // });
-        // hammertime.get('pinch').set({
-        //     enable: true
-        // })
+        // let timer;
 
-        // hammertime.on('swipe pinchin pinchout', function(ev) {
-        //     if (ev.type === 'swipe') {
-        //         const isScaleOver = document.querySelector('.page').clientWidth > viewer.clientWidth;
-        //         if (isScaleOver) return;
+        // const hammertime = new Hammer.Manager(viewer);
 
-        //         if (ev.offsetDirection === 2) {
-        //             PDFViewerApplication.pdfViewer.nextPage();
-        //         } else {
-        //             PDFViewerApplication.pdfViewer.previousPage();
-        //         }
+        // hammertime.add(new Hammer.Pan({
+        //     threshold : 0,
+        //     pointer : 0
+        // }));
+
+        // hammertime.add(new Hammer.Swipe()).recognizeWith(hammertime.get('pan'));
+        // hammertime.add(new Hammer.Pinch({ threshold: 0 })).recognizeWith(hammertime.get('pan'));
+        // hammertime.on('swipe', onSwipe);
+        // hammertime.on('pan', onPan);
+        // hammertime.on('pinchstart pinchmove', onPinch);
+
+
+        // viewer.addEventListener('touchend', savePosition);
+
+        // // polyfill
+        // var reqAnimationFrame = (function () {
+        //     return window[Hammer.prefixed(window, 'requestAnimationFrame')] || function (callback) {
+        //         window.setTimeout(callback, 1000 / 60);
+        //     };
+        // })();
+
+        // function requestElementUpdate() {
+        //     if(!ticking) {
+        //         reqAnimationFrame(updateElementTransform);
+        //         ticking = true;
         //     }
+        // }
+
+        // function updateElementTransform() {
+        //     var value = [
+        //         'translate3d(' + transform.translate.x + 'px, ' + transform.translate.y + 'px, 0)',
+        //         'scale(' + transform.scale + ', ' + transform.scale + ')'
+        //     ];
+
+        //     value = value.join(" ");
+        //     pages.style.webkitTransform = value;
+        //     pages.style.mozTransform = value;
+        //     pages.style.transform = value;
+        //     ticking = false;
+        // }
+
+
+        // function savePosition(){
+        //     const posString = pages.style.transform;
+        //     if(posString){
+        //         const posArr = posString.split(/(translate3d|scale)/gi);
+        //         const posValue = [];
+        //         posArr.splice(1).forEach(e => {
+        //             if((/^\(/).test(e)){ //value
+        //                 posValue.push(e.replace(/[\(\s\)|px]+/g,'').split(',').map(e => Number(e)));
+                        
+        //             }
+        //         })
+                
+        //         initTransform = {
+        //             translate : { x : posValue[0][0], y : posValue[0][1] },
+        //             scale : posValue[1][0]
+        //         }
+        //         console.log(PDFViewerApplication.pdfViewer.currentPageNumber)
+        //     }
+            
+        // }
+        
+
+        // function onSwipe(ev){
+        //     //화면 크기보다 확대 된 경우, swipe중지
+        //     const isScaleOver = document.querySelector('.page').clientWidth > viewer.clientWidth;
+        //     if (isScaleOver) return;
+
+        //     //swipeLeft, swipeDown 시 다음페이지, swipeRigth, swipeUp 시 이전페이지
+        //     const direction = (ev.offsetDirection === 2 || ev.offsetDirection === 8) ? 'next' : 'previous'; 
+
+        //     if (direction === 'next') {
+        //         PDFViewerApplication.pdfViewer.nextPage();
+        //     } else {
+        //         PDFViewerApplication.pdfViewer.previousPage();
+        //     } 
+        // }
+
+        // function onPan(ev) {
+        //     //PDFViewerApplication.pdfViewer.currentScale = 2.0;
+        //     const currentPageNumber = PDFViewerApplication.pdfViewer.currentPageNumber;
+
+        //     //화면 크기보다 축소된 경우, pan 중지 
+        //     const isScaleUnder = document.querySelector('.page').clientWidth < viewer.clientWidth;
+        //     if(isScaleUnder) return;
+
+        //     const page = document.querySelector('.page');
+        //     const limitPos = {
+        //         x : page.offsetWidth - viewer.offsetWidth,
+        //         y : page.offsetHeight - viewer.offsetHeight
+        //     }
+        //     const START_X = initTransform.translate.x;
+        //     const START_Y = initTransform.translate.y;
+
+        //     // x 양수 리밋은 0 , 음수 리밋은 가로사이즈 남는만큼 절댓값 limitPos.x
+        //     // y 양수 리밋은 페이지의 상단 limitPos.y * currentPageNumber - 1 , 음수 리밋은 페이지 하단 limitPos.y * currentPageNumber
+        //     // START_X + ev.deltaX 값이 limitPos보다 작으면, -limitPos , START_X + ev.deltaX 값이 0보다 크면 0 , 그 외에는 START_X + ev.delta
+        //     const nextX = START_X + ev.deltaX > 0 ? 
+        //                                         0 : 
+        //                                         (START_X + ev.deltaX < -limitPos.x ? -limitPos.x : START_X + ev.deltaX)
+        //     const nextY = START_Y + ev.deltaY > limitPos.y * (currentPageNumber - 1) ? 
+        //                                         limitPos.y * (currentPageNumber - 1) : 
+        //                                         (START_Y + ev.deltaY < -limitPos.y * currentPageNumber ? -limitPos.y * currentPageNumber : START_Y + ev.deltaY)
+        //     transform.translate = {
+        //         x: nextX,  
+        //         y: nextY
+        //     };
+
+        //     requestElementUpdate();
+        // }
+
+        // function onPinch(ev){
+        //     console.log(ev)
+        //     //pinch 시 maxScale 고려 해야하고, 트랜스폼 조정 필요함. 
+        //     //onPan의 경우에 page 단위 트랜스 폼 필요함 
+        //     //아예 swiper.js로 해서 하는것도 고려해볼만하고, 
+        //     //로직을 변경해야할수도있음
+        //     // const initScale = initTransform.scale;
+        //     // transform.scale = ev.scale * initScale;
+        //     // PDFViewerApplication.pdfViewer.currentScale = transform.scale;
+        //     if (ev.additionalEvent === 'pinchout') {
+        //         PDFViewerApplication.zoomIn()
+        //     } else if (ev.additionalEvent === 'pinchin') {
+        //         const isScaleOver = document.querySelector('.page').clientWidth < viewer.clientWidth;
+        //         if (isScaleOver) return;
+        //         PDFViewerApplication.zoomOut()
+        //     }
+            
+        // }
+        
 
         //     //TODO 0. 핀치 방법 변경 , zoomEvent 말고 새로 만들어야 함 
         //     //최적화에 대한 작업 필요함 
