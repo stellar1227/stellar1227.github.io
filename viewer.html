@@ -444,12 +444,8 @@ See https://github.com/adobe-type-tools/cmap-resources
         }
 
         function onPinch(ev){
-            if(ev.type === 'pinchmove'){
-                if(ev.additionalEvent === 'pinchout'){
-                    PDFViewerApplication.zoomIn();
-                }else{
-                    PDFViewerApplication.zoomOut();
-                }
+            if(ev.type === 'pinchEnd'){
+                this.pdfViewer.currentScaleValue = ev.scale
             }
         }
         // mobile전용 
