@@ -422,9 +422,10 @@ See https://github.com/adobe-type-tools/cmap-resources
         const viewer = document.getElementById('viewerContainer');
         const pages = document.getElementById('.viewer')
         
-        const hammertime = new Hammer(viewer);
+        const hammertime = new Hammer(viewer, {touchAction : 'auto'});
 
-        hammertime.on('swipe', onSwipe);
+        //hammertime.on('swipe', onSwipe);
+        hammertime.on('pinch')
 
         function onSwipe(ev){
             //화면 크기보다 확대 된 경우, swipe중지
