@@ -444,7 +444,7 @@ See https://github.com/adobe-type-tools/cmap-resources
         }
 
         function onPinch(ev){
-            
+            console.log(ev)
             const initScale = PDFViewerApplication.pdfViewer.currentScale;
             const MIN_SCALE = 0.4;
             const MAX_SCALE = 4;
@@ -459,8 +459,8 @@ See https://github.com/adobe-type-tools/cmap-resources
                 if (initScale !== currentScale) {
                     const scaleCorrectionFactor = currentScale / initScale - 1;
                     const rect = PDFViewerApplication.pdfViewer.container.getBoundingClientRect();
-                    const dx = evt.clientX - rect.left;
-                    const dy = evt.clientY - rect.top;
+                    const dx = ev.deltaX - rect.left;
+                    const dy = ev.deltaY - rect.top;
                     PDFViewerApplication.pdfViewer.container.scrollLeft += dx * scaleCorrectionFactor;
                     PDFViewerApplication.pdfViewer.container.scrollTop += dy * scaleCorrectionFactor;
                     console.log(PDFViewerApplication.pdfViewer.container.scrollLeft)
