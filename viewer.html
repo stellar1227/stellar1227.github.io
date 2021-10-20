@@ -448,9 +448,7 @@ See https://github.com/adobe-type-tools/cmap-resources
             const initScale = PDFViewerApplication.pdfViewer.currentScale;
             const MIN_SCALE = 0.4;
             const MAX_SCALE = 4;
-            const page = document.querySelector('.page');
-            console.log(ev)
-            console.log(page)
+            
             if(ev.type === 'pinchmove'){
                 if(ev.additionalEvent === 'pinchout'){
                     PDFViewerApplication.pdfViewer.currentScaleValue = Math.min(initScale + (ev.scale * 0.1), MAX_SCALE)
@@ -465,6 +463,7 @@ See https://github.com/adobe-type-tools/cmap-resources
                     const dy = evt.clientY - rect.top;
                     PDFViewerApplication.pdfViewer.container.scrollLeft += dx * scaleCorrectionFactor;
                     PDFViewerApplication.pdfViewer.container.scrollTop += dy * scaleCorrectionFactor;
+                    console.log(PDFViewerApplication.pdfViewer.container.scrollLeft)
                 }
             }
         }
