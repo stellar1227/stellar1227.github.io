@@ -2781,7 +2781,7 @@
         const PIXELS_PER_LINE_SCALE = 30;
         ticks = PDFViewerApplication.accumulateWheelTicks(delta / PIXELS_PER_LINE_SCALE);
       }
-  
+      console.log(ticks)
       if (ticks < 0) {
         PDFViewerApplication.zoomOut(-ticks);
       } else if (ticks > 0) {

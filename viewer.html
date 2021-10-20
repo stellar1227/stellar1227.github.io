@@ -444,10 +444,12 @@ See https://github.com/adobe-type-tools/cmap-resources
         }
 
         function onPinch(ev){
-            console.log(ev)
-            const initScale = Number(PDFViewerApplication.pdfViewer.currentScaleValue);
             if(ev.type === 'pinchmove'){
-                PDFViewerApplication.pdfViewer.currentScaleValue = initScale + (ev.scale * 0.1)
+                if(ev.addictionalEvent === 'pinchout'){
+                    PDFViewerApplication.pdfViewer.currentScaleValue = initScale + (ev.scale * 0.1)
+                }else if(ev.addictionalEvent === 'pinchin'){
+                    PDFViewerApplication.pdfViewer.currentScaleValue = initScale - (ev.scale * 0.1)
+                }
             }
         }
         // mobile전용 
