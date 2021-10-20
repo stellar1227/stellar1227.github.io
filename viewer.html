@@ -457,6 +457,15 @@ See https://github.com/adobe-type-tools/cmap-resources
                 }else if(ev.additionalEvent === 'pinchin'){
                     PDFViewerApplication.pdfViewer.currentScaleValue = Math.max(initScale - (ev.scale * 0.1), MIN_SCALE)
                 }
+                const currentScale = PDFViewerApplication.pdfViewer.currentScale;
+                if (initScale !== currentScale) {
+                    const scaleCorrectionFactor = currentScale / initScale - 1;
+                    const rect = PDFViewerApplication.pdfViewer.container.getBoundingClientRect();
+                    const dx = evt.clientX - rect.left;
+                    const dy = evt.clientY - rect.top;
+                    PDFViewerApplication.pdfViewer.container.scrollLeft += dx * scaleCorrectionFactor;
+                    PDFViewerApplication.pdfViewer.container.scrollTop += dy * scaleCorrectionFactor;
+                }
             }
         }
         // mobile전용 
