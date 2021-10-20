@@ -445,11 +445,13 @@ See https://github.com/adobe-type-tools/cmap-resources
 
         function onPinch(ev){
             const initScale = PDFViewerApplication.pdfViewer.currentScale;
+            const MIN_SCALE = 1;
+            const MAX_SCALE = 5;
             if(ev.type === 'pinchmove'){
                 if(ev.additionalEvent === 'pinchout'){
-                    PDFViewerApplication.pdfViewer.currentScaleValue = initScale + (ev.scale * 0.1)
+                    PDFViewerApplication.pdfViewer.currentScaleValue = Math.max(initScale + (ev.scale * 0.1), MAX_SCALE)
                 }else if(ev.additionalEvent === 'pinchin'){
-                    PDFViewerApplication.pdfViewer.currentScaleValue = initScale - (ev.scale * 0.1)
+                    PDFViewerApplication.pdfViewer.currentScaleValue = MAth.min(initScale - (ev.scale * 0.1), MIN_SCALE)
                 }
             }
         }
