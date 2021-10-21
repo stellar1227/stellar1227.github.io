@@ -460,15 +460,15 @@ See https://github.com/adobe-type-tools/cmap-resources
                 if (initScale !== currentScale) {
                     const scaleCorrectionFactor = currentScale / initScale - 1;
                     const rect = PDFViewerApplication.pdfViewer.container.getBoundingClientRect();
-                    const dx = ev.deltaX - rect.left;
-                    const dy = ev.deltaY - rect.top;
+                    const dx = ev.deltaX ;
+                    const dy = ev.deltaY ;
                     PDFViewerApplication.pdfViewer.container.scrollLeft += dx * scaleCorrectionFactor;
                     PDFViewerApplication.pdfViewer.container.scrollTop += dy * scaleCorrectionFactor;
                     console.log(PDFViewerApplication.pdfViewer.container.scrollLeft)
                 }
             }
         }
-        
+
         // mobile전용 
         // const userAgent = typeof navigator !== "undefined" && navigator.userAgent || "";
         // const platform = typeof navigator !== "undefined" && navigator.platform || "";
