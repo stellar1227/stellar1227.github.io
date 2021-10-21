@@ -460,10 +460,10 @@ See https://github.com/adobe-type-tools/cmap-resources
                 if (initScale !== currentScale) {
                     const scaleCorrectionFactor = currentScale / initScale - 1;
                     const rect = PDFViewerApplication.pdfViewer.container.getBoundingClientRect();
-                    const dx = ev.center.x - rect.left;
-                    const dy = ev.center.y- rect.top;
-                    PDFViewerApplication.pdfViewer.container.scrollLeft += dx / 2;
-                    PDFViewerApplication.pdfViewer.container.scrollTop += dy / 2;
+                    const dx = ev.center.x - page.offsetWidth;
+                    const dy = ev.center.y- page.offsetHeight;
+                    PDFViewerApplication.pdfViewer.container.scrollLeft += dx * scaleCorrectionFactor;
+                    PDFViewerApplication.pdfViewer.container.scrollTop += dy * scaleCorrectionFactor;
                     console.log(PDFViewerApplication.pdfViewer.container.scrollLeft)
                 }
             }
