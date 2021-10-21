@@ -2781,7 +2781,7 @@
         const PIXELS_PER_LINE_SCALE = 30;
         ticks = PDFViewerApplication.accumulateWheelTicks(delta / PIXELS_PER_LINE_SCALE);
       }
-      console.log(ticks)
+      
       if (ticks < 0) {
         PDFViewerApplication.zoomOut(-ticks);
       } else if (ticks > 0) {
@@ -2791,6 +2791,7 @@
       const currentScale = pdfViewer.currentScale;
   
       if (previousScale !== currentScale) {
+        console.log(evt)
         const scaleCorrectionFactor = currentScale / previousScale - 1;
         const rect = pdfViewer.container.getBoundingClientRect();
         const dx = evt.clientX - rect.left;

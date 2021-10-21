@@ -444,31 +444,30 @@ See https://github.com/adobe-type-tools/cmap-resources
         }
 
         function onPinch(ev){
-            console.log(ev)
+            console.log(ev.changedPointers[0])
             const initScale = PDFViewerApplication.pdfViewer.currentScale;
             const MIN_SCALE = 0.4;
             const MAX_SCALE = 4;
             const page = document.querySelector('.page');
-            
+            // console.log(page)
             if(ev.type === 'pinchmove'){
                 if(ev.additionalEvent === 'pinchout'){
                     PDFViewerApplication.pdfViewer.currentScaleValue = Math.min(initScale + (ev.scale * 0.05), MAX_SCALE)
                 }else if(ev.additionalEvent === 'pinchin'){
-                    PDFViewerApplication.pdfViewer.currentScaleValue = Math.max(initScale - (ev.scale * 0.05), MIN_SCALE)
+                    PDFViewerApplication.pdfViewer.currentScaleValue = Math.max(initScale - (ev.scale * 0.5), MIN_SCALE)
                 }
                 const currentScale = PDFViewerApplication.pdfViewer.currentScale;
                 if (initScale !== currentScale) {
                     const scaleCorrectionFactor = currentScale / initScale - 1;
                     const rect = PDFViewerApplication.pdfViewer.container.getBoundingClientRect();
-                    const dx = ev.deltaX ;
-                    const dy = ev.deltaY ;
+                    const dx = ev.center.x - rect.left;
+                    const dy = ev.center.y - rect.top;
                     PDFViewerApplication.pdfViewer.container.scrollLeft += dx * scaleCorrectionFactor;
                     PDFViewerApplication.pdfViewer.container.scrollTop += dy * scaleCorrectionFactor;
                     console.log(PDFViewerApplication.pdfViewer.container.scrollLeft)
                 }
             }
         }
-
         // mobile전용 
         // const userAgent = typeof navigator !== "undefined" && navigator.userAgent || "";
         // const platform = typeof navigator !== "undefined" && navigator.platform || "";
