@@ -463,7 +463,7 @@ See https://github.com/adobe-type-tools/cmap-resources
                     const dy = ev.center.y - rect.top;
                     PDFViewerApplication.pdfViewer.container.scrollLeft += dx * scaleCorrectionFactor;
                     PDFViewerApplication.pdfViewer.container.scrollTop += dy * scaleCorrectionFactor;
-                    console.log(PDFViewerApplication.pdfViewer.container.scrollLeft)
+                    console.log(PDFViewerApplication.pdfViewer.container.scrollLeft, PDFViewerApplication.pdfViewer.container.scrollTop)
                 }
             }
         }
