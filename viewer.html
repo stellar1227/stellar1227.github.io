@@ -462,8 +462,8 @@ See https://github.com/adobe-type-tools/cmap-resources
                     const rect = PDFViewerApplication.pdfViewer.container.getBoundingClientRect();
                     const dx = ev.center.x - rect.left;
                     const dy = ev.center.y- rect.top;
-                    PDFViewerApplication.pdfViewer.container.scrollLeft += dx;
-                    PDFViewerApplication.pdfViewer.container.scrollTop += dy;
+                    PDFViewerApplication.pdfViewer.container.scrollLeft += dx / 2;
+                    PDFViewerApplication.pdfViewer.container.scrollTop += dy / 2;
                     console.log(PDFViewerApplication.pdfViewer.container.scrollLeft)
                 }
             }
