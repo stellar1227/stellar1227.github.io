@@ -422,13 +422,90 @@ See https://github.com/adobe-type-tools/cmap-resources
         const viewer = document.getElementById('viewerContainer');
         const pages = document.getElementById('.viewer')
         
-        const hammertime = new Hammer(viewer, {touchAction : 'pan-x pan-y'});
+        const hammertime = new Hammer(viewer, {touchAction : 'pan-y'});
 
-        //hammertime.on('swipe', onSwipe);
-        hammertime.get('pinch').set({ enable: true});
-        hammertime.on('pinchstart pinchmove pinchend', onPinch)
+        
+        hammertime.add(new Hammer.Pan({
+            threshold : 0,
+            pointer : 0
+        }));
+
+        hammertime.add(new Hammer.Swipe()).recognizeWith(hammertime.get('pan'));
+        hammertime.add(new Hammer.Pinch({ threshold: 0 })).recognizeWith(hammertime.get('pan'));
+        // hammertime.on('pan', onPan);
+        hammertime.on('swipe', onSwipe);
+        hammertime.on('pinchstart pinchmove pinchend', onPinch);
+
+        let ticking = false; 
+        let transform = {
+            translate : { x : 0, y : 0}
+        }; //transform value
+
+        let initTransform = {
+	        translate: { x: 0, y: 0 }
+	    };
+
+        let timer;
+
+        // polyfill
+        var reqAnimationFrame = (function () {
+            return window[Hammer.prefixed(window, 'requestAnimationFrame')] || function (callback) {
+                window.setTimeout(callback, 1000 / 60);
+            };
+        })();
+
+        function requestElementUpdate() {
+            if(!ticking) {
+                reqAnimationFrame(updateElementTransform);
+                ticking = true;
+            }
+        }
+
+        function updateElementTransform() {
+            var value = [
+                'translate3d(' + transform.translate.x + 'px, ' + transform.translate.y + 'px, 0)'
+            ];
+
+            value = value.join(" ");
+            pages.style.webkitTransform = value;
+            pages.style.mozTransform = value;
+            pages.style.transform = value;
+            ticking = false;
+        }
+
+        function savePosition(){
+            const posString = pages.style.transform;
+            if(posString){
+                const posArr = posString.split(/(translate3d|scale)/gi);
+                const posValue = [];
+                posArr.splice(1).forEach(e => {
+                    if((/^\(/).test(e)){ //value
+                        posValue.push(e.replace(/[\(\s\)|px]+/g,'').split(',').map(e => Number(e)));
+                        
+                    }
+                })
+                
+                initTransform = {
+                    translate : { x : posValue[0][0], y : posValue[0][1] },
+                    scale : posValue[1][0]
+                }
+                console.log(PDFViewerApplication.pdfViewer.currentPageNumber)
+            }
+            
+        }
+
+        function touchActionChange(){
+            //화면 크기보다 확대 된 경우, touchAction pan-x, pan-y 교체
+            const isScaleOver = document.querySelector('.page').clientWidth > viewer.clientWidth;
+            if (isScaleOver){
+                viewer.style.touchAction = 'pan-x pan-y'
+            }else{
+                viewer.style.touchAction = 'pan-y'
+            }
+        }
 
         function onSwipe(ev){
+            console.log(ev)
             //화면 크기보다 확대 된 경우, swipe중지
             const isScaleOver = document.querySelector('.page').clientWidth > viewer.clientWidth;
             if (isScaleOver) return;
@@ -442,31 +519,76 @@ See https://github.com/adobe-type-tools/cmap-resources
                 PDFViewerApplication.pdfViewer.previousPage();
             } 
         }
-
+        
         function onPinch(ev){
-            console.log(ev)
-            const initScale = PDFViewerApplication.pdfViewer.currentScale;
+            touchActionChange();
+
+            const {pdfViewer} = PDFViewerApplication;
+            const initScale = pdfViewer.currentScale;
             const MIN_SCALE = 0.4;
             const MAX_SCALE = 4;
             // console.log(page)
             if(ev.type === 'pinchmove'){
                 if(ev.additionalEvent === 'pinchout'){
-                    PDFViewerApplication.pdfViewer.currentScaleValue = Math.min(initScale + (ev.scale * 0.01), MAX_SCALE)
+                    pdfViewer.currentScaleValue = Math.min(initScale + (ev.scale * 0.01), MAX_SCALE)
                 }else if(ev.additionalEvent === 'pinchin'){
-                    PDFViewerApplication.pdfViewer.currentScaleValue = Math.max(initScale - (ev.scale * 0.1), MIN_SCALE)
+                    pdfViewer.currentScaleValue = Math.max(initScale - (ev.scale * 0.1), MIN_SCALE)
                 }
-                const currentScale = PDFViewerApplication.pdfViewer.currentScale;
+
+                const currentScale = pdfViewer.currentScale;
+
                 if (initScale !== currentScale) {
                     const scaleCorrectionFactor = currentScale / initScale - 1;
-                    const rect = PDFViewerApplication.pdfViewer.container.getBoundingClientRect();
-                    const dx = ev.center.x - rect.left;
-                    const dy = ev.center.y - rect.top;
-                    PDFViewerApplication.pdfViewer.container.scrollLeft += dx * scaleCorrectionFactor;
-                    PDFViewerApplication.pdfViewer.container.scrollTop += dy * scaleCorrectionFactor;
-                    console.log(PDFViewerApplication.pdfViewer.container.scrollLeft, PDFViewerApplication.pdfViewer.container.scrollTop)
+                    const page = document.querySelector('.page');
+                    const screen = pdfViewer.container;
+                    
+
+                    // const dx = 0;
+                    // const dy = 0;
+
+                    // transform.translate = {
+                    //     x: dx,  
+                    //     y: dy
+                    // };
+
+                    // requestElementUpdate();
+
+
+                    // //현재 스크롤 위치가 189, 200 그러니까 right , bottom이라고 치면 거기서 비율로 늘어나야하는데. 기존 스크롤 위치에서 늘어난 비율만큼 더해야한다. 
+                    // // 늘어난 비율은 어떻게 구하는가. 
+                    // console.log((page.offsetWidth - screen.offsetWidth) * (ev.center.x / screen.offsetWidth) * scaleCorrectionFactor)
+                    const dx = ev.center.x  - page.offsetLeft;
+                    const dy = ev.center.y - page.offsetTop;
+                    
+                    pdfViewer.container.scrollLeft += dx * scaleCorrectionFactor;
+                    pdfViewer.container.scrollTop += dy * scaleCorrectionFactor;
+                    // PDFViewerApplication.pdfViewer.container.scrollLeft = (page.offsetWidth - viewer.offsetWidth) * (ev.center.x / page.offsetWidth)
+                    // PDFViewerApplication.pdfViewer.container.scrollTop = (page.offsetHeight - viewer.offsetHeight) * (ev.center.y / page.offsetHeight) 
+                    
+                    // //이래서 확대하는 포인트의 값이 필요한 것 
+                    // //아 현재 스크롤값을 계산해서 내 센터가 어디있는지 봐야함.. 내가 찍은 center 값이, 페이지의 어디인지 알아야해. 
+                    // //그리고 스크롤 위치를 계산해서 페이지 위치값을 계산해야함.. 
+
+
+                    //console.log(pdfViewer.container.scrollLeft)
+                    // pdfViewer.container.scrollLeft += dx * scaleCorrectionFactor;
+                    // pdfViewer.container.scrollTop += dy * scaleCorrectionFactor;
+
+                    // const dx = ev.center.x - rect.left - (page.offsetWidth / 2); 
+                    // const dy = ev.center.y - rect.top - (page.offsetHeight / 2);
+                    
+                    // PDFViewerApplication.pdfViewer.container.scrollLeft += dx * scaleCorrectionFactor;
+                    // PDFViewerApplication.pdfViewer.container.scrollTop += dy * scaleCorrectionFactor;
+                    // console.log(PDFViewerApplication.pdfViewer.container.scrollLeft, PDFViewerApplication.pdfViewer.container.scrollTop)
+                    // const page = document.querySelector('.page').getBoundingClientRect();
+                    // const dx = ev.center.x - page.left;
+                    // const dy = ev.center.y - page.top;
+                    
                 }
             }
         }
+
+
         // mobile전용 
         // const userAgent = typeof navigator !== "undefined" && navigator.userAgent || "";
         // const platform = typeof navigator !== "undefined" && navigator.platform || "";
