@@ -508,7 +508,6 @@ See https://github.com/adobe-type-tools/cmap-resources
         }
 
         function onSwipe(ev){
-            console.log(ev)
             //화면 크기보다 확대 된 경우, swipe중지
             const isScaleOver = document.querySelector('.page').clientWidth > viewer.clientWidth;
             if (isScaleOver) return;
@@ -524,8 +523,6 @@ See https://github.com/adobe-type-tools/cmap-resources
         }
         
         function onPinch(ev){
-            touchActionChange();
-
             const {pdfViewer} = PDFViewerApplication;
             const initScale = pdfViewer.currentScale;
             const MIN_SCALE = 0.4;
@@ -586,7 +583,7 @@ See https://github.com/adobe-type-tools/cmap-resources
                     // const page = document.querySelector('.page').getBoundingClientRect();
                     // const dx = ev.center.x - page.left;
                     // const dy = ev.center.y - page.top;
-                    
+                    touchActionChange();
                 }
             }
         }

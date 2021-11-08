@@ -804,7 +804,8 @@
       if (this.pdfViewer.isInPresentationMode) {
         return;
       }
-  
+      
+      console.log(this.pdfViewer)
       let newScale = this.pdfViewer.currentScale;
   
       do {
