@@ -5780,6 +5780,7 @@
       const numPages = this._linkService.pagesCount;
       this._highlightMatches = true;
   
+      
       if (this._dirtyMatch) {
         this._dirtyMatch = false;
         this._selected.pageIdx = this._selected.matchIdx = -1;

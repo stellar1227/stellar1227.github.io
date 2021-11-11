@@ -688,14 +688,17 @@
   --progressBar-indeterminate-blend-color: rgba(116, 177, 239, 1);
   --scrollbar-color: auto;
   --scrollbar-bg-color: auto;
-  --toolbar-icon-bg-color: rgba(237, 237, 240, 1); /* check*/
-  --toolbar-icon-hover-bg-color: rgba(255, 255, 255, 1); /* check */
+  --toolbar-icon-bg-color: rgb(38, 38, 39); /* check*/
+  --toolbar-icon-hover-bg-color: rgba(12, 12, 13, 1); /* check */
+  --top-toolbar-icon-bg-color :  rgba(237, 237, 240, 1); /* check*/
+  --top-toolbar-icon-hover-bg-color: rgba(255, 255, 255, 1); /* check */
 
   --sidebar-narrow-bg-color: rgba(237, 237, 240, 0.9);
   --sidebar-toolbar-bg-color: rgba(245, 246, 247, 1);
-  --toolbar-bg-color: rgb(43, 102, 187); /*check */
+  --toolbar-bg-color: rgba(43, 102, 187,1); /*check */
   --toolbar-border-color: rgb(14, 8, 8);/*check */
   --button-hover-color: rgba(221, 222, 223, 1);
+  --top-toolbar-button-hover-color: rgba(16, 51, 99, 0.8);/*check*/
   --toggled-btn-color: rgba(255, 255, 255, 1);/*cheked*/
   --toggled-btn-bg-color: rgba(0, 0, 0, 0.3);
   --toggled-hover-active-btn-color: rgba(0, 0, 0, 0.4);
@@ -1437,7 +1440,7 @@ html[dir="rtl"] .findbar * {
 }
 
 .splitToolbarButton {
-  margin: 2px 2px 0;
+  margin: 8px 8px 0;
   display: inline-block;
 }
 html[dir="ltr"] .splitToolbarButton > .toolbarButton {
@@ -1530,7 +1533,7 @@ html[dir="rtl"] .splitToolbarButtonSeparator {
 .overlayButton {/* check */
   min-width: 16px;
   margin: 8px 4px;
-  padding: 2px 6px 0;
+  padding: 2px 4px 0;
   border: none;
   border-radius: 2px;
   color: var(--main-color);
@@ -1670,8 +1673,8 @@ html[dir="rtl"] .dropdownToolbarButton > select {
 
 .toolbarButton::before {
   opacity: var(--toolbar-icon-opacity);
-  top: 6px;
-  left: 6px;
+  top: 4px; /*check*/
+  left: 4px;
 }
 
 .toolbarButton:hover::before,
@@ -1925,10 +1928,10 @@ html[dir="rtl"] .secondaryToolbarButton > span {
   mask-image: var(--secondaryToolbarButton-documentProperties-icon);
 }
 
-.verticalToolbarSeparator {
+.verticalToolbarSeparator { /*check*/
   display: block;
   padding: 11px 0;
-  margin: 5px 2px;
+  margin: 11px 2px;
   width: 1px;
   background-color: var(--separator-color);
 }
@@ -1982,6 +1985,7 @@ html[dir="rtl"] .toolbarField[type="checkbox"] {
   min-width: 16px;
   text-align: right;
   width: 40px;
+  margin-left:8px;/*check*/
 }
 
 .toolbarField.pageNumber.visiblePageIsLoading {
@@ -2634,7 +2638,7 @@ html[dir="rtl"] #documentPropertiesOverlay .row > * {
   position: absolute;
   right:30px;
   top:80px;
-  width:28px;
+  width:36px;
   z-index:500
 }
 .zoomCtrlBtn .zoomIn{
@@ -2666,4 +2670,21 @@ html[dir="rtl"] #documentPropertiesOverlay .row > * {
   transform:rotate(-90deg);
   background:rgba(255,255,255,0.3);
   border:1px solid;
+}
+
+#toolbarContainer .toolbarButton::before { 
+  background-color: var(--top-toolbar-icon-bg-color);
+}
+
+#toolbarContainer .toolbarButton:hover::before,
+#toolbarContainer .toolbarButton:focus::before{
+  background-color: var(--top-toolbar-icon-hover-bg-color);
+}
+#toolbarContainer .toolbarButton:hover,
+#toolbarContainer .toolbarButton:focus{
+  background-color: var(--top-toolbar-button-hover-color);
+}
+
+#toolbarContainer .toolbarLabel{
+  color: var(--top-toolbar-icon-bg-color);
 }
