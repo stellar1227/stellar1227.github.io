@@ -671,6 +671,7 @@
 }
 
 :root {
+  --barTop-height : 44px; 
   --sidebar-width: 200px;
   --sidebar-transition-duration: 200ms;
   --sidebar-transition-timing-function: ease;
@@ -687,22 +688,22 @@
   --progressBar-indeterminate-blend-color: rgba(116, 177, 239, 1);
   --scrollbar-color: auto;
   --scrollbar-bg-color: auto;
-  --toolbar-icon-bg-color: rgba(0, 0, 0, 1);
-  --toolbar-icon-hover-bg-color: rgba(0, 0, 0, 1);
+  --toolbar-icon-bg-color: rgba(237, 237, 240, 1); /* check*/
+  --toolbar-icon-hover-bg-color: rgba(255, 255, 255, 1); /* check */
 
   --sidebar-narrow-bg-color: rgba(237, 237, 240, 0.9);
   --sidebar-toolbar-bg-color: rgba(245, 246, 247, 1);
-  --toolbar-bg-color: rgba(249, 249, 250, 1);
-  --toolbar-border-color: rgba(204, 204, 204, 1);
+  --toolbar-bg-color: rgb(43, 102, 187); /*check */
+  --toolbar-border-color: rgb(14, 8, 8);/*check */
   --button-hover-color: rgba(221, 222, 223, 1);
-  --toggled-btn-color: rgba(0, 0, 0, 1);
+  --toggled-btn-color: rgba(255, 255, 255, 1);/*cheked*/
   --toggled-btn-bg-color: rgba(0, 0, 0, 0.3);
   --toggled-hover-active-btn-color: rgba(0, 0, 0, 0.4);
   --dropdown-btn-bg-color: rgba(215, 215, 219, 1);
   --separator-color: rgba(0, 0, 0, 0.3);
-  --field-color: rgba(6, 6, 6, 1);
-  --field-bg-color: rgba(255, 255, 255, 1);
-  --field-border-color: rgba(187, 187, 188, 1);
+  --field-color: rgba(6, 6, 6, 1); /*check*/
+  --field-bg-color: rgba(255, 255, 255, 1);/*check*/
+  --field-border-color: rgba(187, 187, 188, 1);/*check*/
   --findbar-nextprevious-btn-bg-color: rgba(227, 228, 230, 1);
   --treeitem-color: rgba(0, 0, 0, 0.8);
   --treeitem-hover-color: rgba(0, 0, 0, 0.9);
@@ -756,7 +757,7 @@
   --secondaryToolbarButton-documentProperties-icon: url(images/secondaryToolbarButton-documentProperties.svg);
 }
 
-@media (prefers-color-scheme: dark) {
+@media (prefers-color-scheme: dark) { /*check darkmode */
   :root {
     --main-color: rgba(249, 249, 250, 1);
     --body-bg-color: rgba(42, 42, 46, 1);
@@ -766,7 +767,7 @@
     --progressBar-indeterminate-blend-color: rgba(20, 68, 133, 1);
     --scrollbar-color: rgba(121, 121, 123, 1);
     --scrollbar-bg-color: rgba(35, 35, 39, 1);
-    --toolbar-icon-bg-color: rgba(255, 255, 255, 1);
+    --toolbar-icon-bg-color: rgba(255, 255, 255, 1); /* check*/
     --toolbar-icon-hover-bg-color: rgba(255, 255, 255, 1);
 
     --sidebar-narrow-bg-color: rgba(42, 42, 46, 0.9);
@@ -800,6 +801,7 @@
      * the `mask-image` approach used with all of the other images doesn't work
      * here; hence why we still have two versions of this particular image. */
     --loading-icon: url(images/loading-dark.svg);
+
   }
 }
 
@@ -918,7 +920,7 @@ select {
 
 #sidebarContainer {
   position: absolute;
-  top: 32px;
+  top: var(--barTop-height);
   bottom: 0;
   width: var(--sidebar-width);
   visibility: hidden;
@@ -968,7 +970,7 @@ html[dir="rtl"] #outerContainer.sidebarOpen #sidebarContainer {
 }
 
 #sidebarContent {
-  top: 32px;
+  top: var(--barTop-height);
   bottom: 0;
   overflow: auto;
   -webkit-overflow-scrolling: touch;
@@ -989,7 +991,7 @@ html[dir="rtl"] #sidebarContent {
   overflow: auto;
   -webkit-overflow-scrolling: touch;
   position: absolute;
-  top: 32px;
+  top: var(--barTop-height); /*check*/
   right: 0;
   bottom: 0;
   left: 0;
@@ -1032,7 +1034,7 @@ html[dir="rtl"]
 
 #toolbarSidebar {
   width: 100%;
-  height: 32px;
+  height: var(--barTop-height);
   background-color: var(--sidebar-toolbar-bg-color);
 }
 html[dir="ltr"] #toolbarSidebar {
@@ -1077,13 +1079,13 @@ html[dir="rtl"] #sidebarResizer {
 .findbar,
 .secondaryToolbar {
   position: relative;
-  height: 32px;
+  height: var(--barTop-height); /* check */
   background-color: var(--toolbar-bg-color);
   box-shadow: 0 1px 0 var(--toolbar-border-color);
 }
 
 #toolbarViewer {
-  height: 32px;
+  height: var(--barTop-height); /*check*/
 }
 
 #loadingBar {
@@ -1173,7 +1175,7 @@ html[dir="rtl"] #outerContainer.sidebarOpen #loadingBar {
 
 .findbar,
 .secondaryToolbar {
-  top: 32px;
+  top: var(--barTop-height);
   position: absolute;
   z-index: 10000;
   height: auto;
@@ -1450,8 +1452,8 @@ html[dir="rtl"] .splitToolbarButton > .toolbarButton {
 .overlayButton {
   border: 0 none;
   background: none;
-  width: 28px;
-  height: 28px;
+  width: 28px;/*check*/
+  height: 28px;/*check*/
 }
 
 .overlayButton:hover,
@@ -1525,9 +1527,9 @@ html[dir="rtl"] .splitToolbarButtonSeparator {
 .toolbarButton,
 .dropdownToolbarButton,
 .secondaryToolbarButton,
-.overlayButton {
+.overlayButton {/* check */
   min-width: 16px;
-  margin: 2px 1px;
+  margin: 8px 4px;
   padding: 2px 6px 0;
   border: none;
   border-radius: 2px;
@@ -1571,7 +1573,7 @@ html[dir="rtl"] #toolbarViewerLeft > .toolbarButton:first-child {
   background-color: var(--toggled-btn-color);
 }
 
-.toolbarButton.toggled::before {
+.toolbarButton.toggled::before { 
   background-color: var(--toggled-btn-color);
 }
 
@@ -1586,7 +1588,7 @@ html[dir="rtl"] #toolbarViewerLeft > .toolbarButton:first-child {
   padding: 0;
   overflow: hidden;
   background-color: var(--dropdown-btn-bg-color);
-  margin-top: 2px !important;
+  margin-top: 8px !important; /*check*/
 }
 .dropdownToolbarButton::after {
   top: 6px;
@@ -1604,7 +1606,7 @@ html[dir="rtl"] .dropdownToolbarButton::after {
 
 .dropdownToolbarButton > select {
   width: 162px;
-  height: 28px;
+  height: 28px; /*check*/
   font-size: 12px;
   color: var(--main-color);
   margin: 0;
@@ -1651,8 +1653,8 @@ html[dir="rtl"] .dropdownToolbarButton > select {
    * All relevant containers have a size of 28x28 */
   position: absolute;
   display: inline-block;
-  width: 16px;
-  height: 16px;
+  width: 20px; /* check */
+  height: 20px;/* check */
 
   content: "";
   background-color: var(--toolbar-icon-bg-color);
@@ -1755,7 +1757,7 @@ html[dir="rtl"] .toolbarButton#secondaryToolbarToggle::before {
 }
 
 .toolbarButton.download::before,
-.secondaryToolbarButton.download::before {
+.secondaryToolbarButton.download::before { /*check*/
   -webkit-mask-image: var(--toolbarButton-download-icon);
   mask-image: var(--toolbarButton-download-icon);
 }
@@ -1947,7 +1949,7 @@ html[dir="rtl"] .verticalToolbarSeparator {
 
 .toolbarField {
   padding: 4px 7px;
-  margin: 3px 0;
+  margin: 8px 0; /*check*/
   border-radius: 2px;
   background-color: var(--field-bg-color);
   background-clip: padding-box;
@@ -2000,8 +2002,8 @@ html[dir="rtl"] .toolbarField[type="checkbox"] {
 
 .toolbarLabel {
   min-width: 16px;
-  padding: 7px;
-  margin: 2px;
+  padding: 6px;
+  margin: 8px 4px 9px;  /*check*/
   border-radius: 2px;
   color: var(--main-color);
   font-size: 12px;
@@ -2358,7 +2360,7 @@ html[dir="rtl"] #documentPropertiesOverlay .row > * {
   background: none repeat scroll 0 0 rgba(255, 255, 255, 1);
   border: 1px solid rgba(102, 102, 102, 1);
   position: fixed;
-  top: 32px;
+  top: var(--barTop-height);
   right: 0;
   bottom: 0;
   font-size: 10px;
@@ -2613,11 +2615,11 @@ html[dir="rtl"] #documentPropertiesOverlay .row > * {
   .toolbarButtonSpacer {
     width: 0;
   }
-  html[dir="ltr"] .findbar {
-    left: 34px;
+  html[dir="ltr"] .findbar { /*check*/
+    left: 4px;
   }
-  html[dir="rtl"] .findbar {
-    right: 34px;
+  html[dir="rtl"] .findbar { /*check*/
+    right: 4px;
   }
 }
 
@@ -2628,14 +2630,10 @@ html[dir="rtl"] #documentPropertiesOverlay .row > * {
 } */
 /*기능축소*/
 
-.blindMenu{
-  display: none;
-}
-
 .zoomCtrlBtn{
   position: absolute;
   right:30px;
-  bottom:30px;
+  top:80px;
   width:28px;
   z-index:500
 }
@@ -2668,8 +2666,4 @@ html[dir="rtl"] #documentPropertiesOverlay .row > * {
   transform:rotate(-90deg);
   background:rgba(255,255,255,0.3);
   border:1px solid;
-}
-
-#toolbarViewerLeft{
-  padding-left:10px;
 }
