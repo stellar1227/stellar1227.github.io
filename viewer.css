@@ -1083,7 +1083,7 @@ html[dir="rtl"] #sidebarResizer {
 .secondaryToolbar {
   position: relative;
   height: var(--barTop-height); 
-  background-color: var(--toolbar-bg-color);
+  /* background-color: var(--toolbar-bg-color); */
   box-shadow: 0 1px 0 var(--toolbar-border-color);
 }
 
