@@ -688,25 +688,25 @@
   --progressBar-indeterminate-blend-color: rgba(116, 177, 239, 1);
   --scrollbar-color: auto;
   --scrollbar-bg-color: auto;
-  --toolbar-icon-bg-color: rgb(38, 38, 39); /* check*/
-  --toolbar-icon-hover-bg-color: rgba(12, 12, 13, 1); /* check */
-  --top-toolbar-icon-bg-color :  rgba(237, 237, 240, 1); /* check*/
-  --top-toolbar-icon-hover-bg-color: rgba(255, 255, 255, 1); /* check */
+  --toolbar-icon-bg-color: rgb(38, 38, 39); 
+  --toolbar-icon-hover-bg-color: rgba(12, 12, 13, 1); 
+  --top-toolbar-icon-bg-color :  rgba(237, 237, 240, 1); 
+  --top-toolbar-icon-hover-bg-color: rgba(255, 255, 255, 1); 
 
   --sidebar-narrow-bg-color: rgba(237, 237, 240, 0.9);
   --sidebar-toolbar-bg-color: rgba(245, 246, 247, 1);
-  --toolbar-bg-color: rgba(43, 102, 187,1); /*check */
-  --toolbar-border-color: rgb(14, 8, 8);/*check */
+  --toolbar-bg-color: rgba(43, 102, 187,1); 
+  --toolbar-border-color: rgb(14, 8, 8);
   --button-hover-color: rgba(221, 222, 223, 1);
-  --top-toolbar-button-hover-color: rgba(16, 51, 99, 0.8);/*check*/
-  --toggled-btn-color: rgba(255, 255, 255, 1);/*cheked*/
+  --top-toolbar-button-hover-color: rgba(16, 51, 99, 0.8);
+  --toggled-btn-color: rgba(255, 255, 255, 1);
   --toggled-btn-bg-color: rgba(0, 0, 0, 0.3);
   --toggled-hover-active-btn-color: rgba(0, 0, 0, 0.4);
   --dropdown-btn-bg-color: rgba(215, 215, 219, 1);
   --separator-color: rgba(0, 0, 0, 0.3);
-  --field-color: rgba(6, 6, 6, 1); /*check*/
-  --field-bg-color: rgba(255, 255, 255, 1);/*check*/
-  --field-border-color: rgba(187, 187, 188, 1);/*check*/
+  --field-color: rgba(6, 6, 6, 1); 
+  --field-bg-color: rgba(255, 255, 255, 1);
+  --field-border-color: rgba(187, 187, 188, 1);
   --findbar-nextprevious-btn-bg-color: rgba(227, 228, 230, 1);
   --treeitem-color: rgba(0, 0, 0, 0.8);
   --treeitem-hover-color: rgba(0, 0, 0, 0.9);
@@ -760,7 +760,7 @@
   --secondaryToolbarButton-documentProperties-icon: url(images/secondaryToolbarButton-documentProperties.svg);
 }
 
-@media (prefers-color-scheme: dark) { /*check darkmode */
+@media (prefers-color-scheme: dark) { 
   :root {
     --main-color: rgba(249, 249, 250, 1);
     --body-bg-color: rgba(42, 42, 46, 1);
@@ -770,7 +770,7 @@
     --progressBar-indeterminate-blend-color: rgba(20, 68, 133, 1);
     --scrollbar-color: rgba(121, 121, 123, 1);
     --scrollbar-bg-color: rgba(35, 35, 39, 1);
-    --toolbar-icon-bg-color: rgba(255, 255, 255, 1); /* check*/
+    --toolbar-icon-bg-color: rgba(255, 255, 255, 1); 
     --toolbar-icon-hover-bg-color: rgba(255, 255, 255, 1);
 
     --sidebar-narrow-bg-color: rgba(42, 42, 46, 0.9);
@@ -994,7 +994,7 @@ html[dir="rtl"] #sidebarContent {
   overflow: auto;
   -webkit-overflow-scrolling: touch;
   position: absolute;
-  top: var(--barTop-height); /*check*/
+  top: var(--barTop-height); 
   right: 0;
   bottom: 0;
   left: 0;
@@ -1082,13 +1082,13 @@ html[dir="rtl"] #sidebarResizer {
 .findbar,
 .secondaryToolbar {
   position: relative;
-  height: var(--barTop-height); /* check */
+  height: var(--barTop-height); 
   background-color: var(--toolbar-bg-color);
   box-shadow: 0 1px 0 var(--toolbar-border-color);
 }
 
 #toolbarViewer {
-  height: var(--barTop-height); /*check*/
+  height: var(--barTop-height); 
 }
 
 #loadingBar {
@@ -1455,8 +1455,8 @@ html[dir="rtl"] .splitToolbarButton > .toolbarButton {
 .overlayButton {
   border: 0 none;
   background: none;
-  width: 28px;/*check*/
-  height: 28px;/*check*/
+  width: 28px;
+  height: 28px;
 }
 
 .overlayButton:hover,
@@ -1530,7 +1530,7 @@ html[dir="rtl"] .splitToolbarButtonSeparator {
 .toolbarButton,
 .dropdownToolbarButton,
 .secondaryToolbarButton,
-.overlayButton {/* check */
+.overlayButton {
   min-width: 16px;
   margin: 8px 4px;
   padding: 2px 4px 0;
@@ -1591,10 +1591,10 @@ html[dir="rtl"] #toolbarViewerLeft > .toolbarButton:first-child {
   padding: 0;
   overflow: hidden;
   background-color: var(--dropdown-btn-bg-color);
-  margin-top: 8px !important; /*check*/
+  margin-top: 8px !important; 
 }
 .dropdownToolbarButton::after {
-  top: 6px;
+  top: 4px;
   pointer-events: none;
 
   -webkit-mask-image: var(--toolbarButton-menuArrow-icon);
@@ -1609,7 +1609,7 @@ html[dir="rtl"] .dropdownToolbarButton::after {
 
 .dropdownToolbarButton > select {
   width: 162px;
-  height: 28px; /*check*/
+  height: 28px;
   font-size: 12px;
   color: var(--main-color);
   margin: 0;
@@ -1626,7 +1626,6 @@ html[dir="rtl"] .dropdownToolbarButton > select {
 .dropdownToolbarButton > select:hover,
 .dropdownToolbarButton > select:focus {
   background-color: var(--button-hover-color);
-  color: var(--toggled-btn-color);
 }
 
 .dropdownToolbarButton > select > option {
@@ -1656,8 +1655,8 @@ html[dir="rtl"] .dropdownToolbarButton > select {
    * All relevant containers have a size of 28x28 */
   position: absolute;
   display: inline-block;
-  width: 20px; /* check */
-  height: 20px;/* check */
+  width: 20px; 
+  height: 20px;
 
   content: "";
   background-color: var(--toolbar-icon-bg-color);
@@ -1673,7 +1672,7 @@ html[dir="rtl"] .dropdownToolbarButton > select {
 
 .toolbarButton::before {
   opacity: var(--toolbar-icon-opacity);
-  top: 4px; /*check*/
+  top: 4px;
   left: 4px;
 }
 
@@ -1760,7 +1759,7 @@ html[dir="rtl"] .toolbarButton#secondaryToolbarToggle::before {
 }
 
 .toolbarButton.download::before,
-.secondaryToolbarButton.download::before { /*check*/
+.secondaryToolbarButton.download::before {
   -webkit-mask-image: var(--toolbarButton-download-icon);
   mask-image: var(--toolbarButton-download-icon);
 }
@@ -1928,7 +1927,7 @@ html[dir="rtl"] .secondaryToolbarButton > span {
   mask-image: var(--secondaryToolbarButton-documentProperties-icon);
 }
 
-.verticalToolbarSeparator { /*check*/
+.verticalToolbarSeparator { 
   display: block;
   padding: 11px 0;
   margin: 11px 2px;
@@ -1952,7 +1951,7 @@ html[dir="rtl"] .verticalToolbarSeparator {
 
 .toolbarField {
   padding: 4px 7px;
-  margin: 8px 0; /*check*/
+  margin: 8px 0; 
   border-radius: 2px;
   background-color: var(--field-bg-color);
   background-clip: padding-box;
@@ -1985,7 +1984,7 @@ html[dir="rtl"] .toolbarField[type="checkbox"] {
   min-width: 16px;
   text-align: right;
   width: 40px;
-  margin-left:8px;/*check*/
+  margin-left:8px;
 }
 
 .toolbarField.pageNumber.visiblePageIsLoading {
@@ -2007,7 +2006,7 @@ html[dir="rtl"] .toolbarField[type="checkbox"] {
 .toolbarLabel {
   min-width: 16px;
   padding: 6px;
-  margin: 8px 4px 9px;  /*check*/
+  margin: 8px 4px 9px;  
   border-radius: 2px;
   color: var(--main-color);
   font-size: 12px;
@@ -2619,10 +2618,10 @@ html[dir="rtl"] #documentPropertiesOverlay .row > * {
   .toolbarButtonSpacer {
     width: 0;
   }
-  html[dir="ltr"] .findbar { /*check*/
+  html[dir="ltr"] .findbar { 
     left: 4px;
   }
-  html[dir="rtl"] .findbar { /*check*/
+  html[dir="rtl"] .findbar { 
     right: 4px;
   }
 }
@@ -2638,16 +2637,18 @@ html[dir="rtl"] #documentPropertiesOverlay .row > * {
   position: absolute;
   right:30px;
   top:80px;
-  width:36px;
+  width:40px;
   z-index:500
 }
 .zoomCtrlBtn .zoomIn{
   position: relative;
   background:rgba(121, 153, 185, 0.637);
+  margin:0 0 8px;
 }
 .zoomCtrlBtn .zoomOut{
   position: relative;
-  background:rgba(121, 153, 185, 0.637); 
+  background:rgba(121, 153, 185, 0.637);
+  margin:0;
 }
 .pageCtrlBtn{
   position: absolute;
