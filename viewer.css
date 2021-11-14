@@ -2643,11 +2643,11 @@ html[dir="rtl"] #documentPropertiesOverlay .row > * {
 }
 .zoomCtrlBtn .zoomIn{
   position: relative;
-  border:1px solid; 
+  background:rgba(121, 153, 185, 0.637);
 }
 .zoomCtrlBtn .zoomOut{
   position: relative;
-  border:1px solid; 
+  background:rgba(121, 153, 185, 0.637); 
 }
 .pageCtrlBtn{
   position: absolute;
@@ -2695,6 +2695,7 @@ html[dir="rtl"] #documentPropertiesOverlay .row > * {
 .floatingToolbar .zoomCtrlBtn .toolbarButton::before{
   left:10px;
   top:10px;
+  background:#fff;
 }
 .floatingToolbar .pageCtrlBtn .toolbarButton{
   width:40px;
@@ -2704,6 +2705,7 @@ html[dir="rtl"] #documentPropertiesOverlay .row > * {
 .floatingToolbar .pageCtrlBtn .toolbarButton::before{
   left:10px;
   top:10px;
+  background:#fff;
 }
 #viewerContainer{
   background-color:rgba(121, 153, 185, 0.4);
