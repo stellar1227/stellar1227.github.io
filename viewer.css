@@ -1352,7 +1352,7 @@ html[dir="rtl"] .secondaryToolbar {
   border-width: 8px;
 }
 .doorHanger:after {
-  /* border-bottom-color: var(--toolbar-bg-color); */
+  border-bottom-color: var(--toolbar-bg-color);
 }
 .doorHangerRight:after {
   border-bottom-color: var(--doorhanger-bg-color);
