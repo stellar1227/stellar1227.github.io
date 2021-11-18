@@ -2636,7 +2636,7 @@ html[dir="rtl"] #documentPropertiesOverlay .row > * {
 .zoomCtrlBtn{
   position: absolute;
   right:30px;
-  top:80px;
+  bottom:60px;
   width:40px;
   z-index:500
 }
