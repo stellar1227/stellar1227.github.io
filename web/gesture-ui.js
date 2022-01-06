@@ -3,11 +3,13 @@
 const viewer = document.getElementById('viewerContainer');
 const swipeHorizontalButton = document.getElementById('swipeHorizontalMode');
 const swipeVerticalButton = document.getElementById('swipeVerticalMode');
+const pageControlButton = document.querySelector('.pageCtrlBtn');
 let isTouchDirection = 'swipeHorizontal';
 
 //스와이프 모드선택 - 기본 가로스와이프
 swipeHorizontalButton.addEventListener('click',changeSwipeMode);
 swipeVerticalButton.addEventListener('click',changeSwipeMode);
+
 
 function changeSwipeMode(e){
     if(e.target.classList.contains(isTouchDirection)) return;
@@ -16,10 +18,12 @@ function changeSwipeMode(e){
         isTouchDirection = 'swipeVertical';
         swipeVerticalButton.classList.add('actived');
         swipeHorizontalButton.classList.remove('actived');
+        pageControlButton.classList.add('hidden');
     }else{
         isTouchDirection = 'swipeHorizontal';
         swipeHorizontalButton.classList.add('actived');
         swipeVerticalButton.classList.remove('actived');
+        pageControlButton.classList.remove('hidden')
     }
 }
 
