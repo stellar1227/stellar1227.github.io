@@ -119,7 +119,7 @@
   background-color: rgba(0, 54, 255, 0.13);
   border: 1px solid transparent;
   box-sizing: border-box;
-  font-size: 9px;
+  font-size: 13px;
   height: 100%;
   margin: 0;
   padding: 0 3px;
@@ -137,7 +137,7 @@
 
 .annotationLayer .textWidgetAnnotation textarea {
   font: message-box;
-  font-size: 9px;
+  font-size: 13px;
   resize: none;
 }
 
@@ -238,13 +238,13 @@
   margin-left: 5px;
   cursor: pointer;
   font: message-box;
-  font-size: 9px;
+  font-size: 13px;
   white-space: normal;
   word-wrap: break-word;
 }
 
 .annotationLayer .popup > * {
-  font-size: 9px;
+  font-size: 13px;
 }
 
 .annotationLayer .popup h1 {
@@ -314,7 +314,7 @@
   color: black;
   font-weight: normal;
   font-kerning: none;
-  font-size: 10px;
+  font-size: 14px;
   font-style: normal;
   letter-spacing: 0;
   text-decoration: none;
@@ -409,8 +409,8 @@
   border-style: solid;
   border-width: 2px;
   border-color: #8f8f9d;
-  font-size: 10px;
-  line-height: 10px;
+  font-size: 14px;
+  line-height: 100%;
   width: 10px;
   height: 10px;
   text-align: center;
@@ -839,7 +839,7 @@ html {
   height: 100%;
   width: 100%;
   /* Font size is needed to make the activity bar the correct size. */
-  font-size: 10px;
+  font-size: 14px;
 }
 
 body {
@@ -1188,8 +1188,8 @@ html[dir="rtl"] #outerContainer.sidebarOpen #loadingBar {
   padding: 0 4px;
   margin: 4px 2px;
   color: rgba(217, 217, 217, 1);
-  font-size: 12px;
-  line-height: 14px;
+  font-size: 16px;
+  line-height: 120%;
   text-align: left;
   cursor: default;
 }
@@ -1539,8 +1539,8 @@ html[dir="rtl"] .splitToolbarButtonSeparator {
   border: none;
   border-radius: 2px;
   color: var(--main-color);
-  font-size: 12px;
-  line-height: 14px;
+  font-size: 16px;
+  line-height: 120%;
   -webkit-user-select: none;
      -moz-user-select: none;
           user-select: none;
@@ -1592,7 +1592,7 @@ html[dir="rtl"] #toolbarViewerLeft > .toolbarButton:first-child {
 }
 
 .dropdownToolbarButton {
-  width: 140px;
+  width: 140px!important;
   padding: 0;
   overflow: hidden;
   background-color: var(--dropdown-btn-bg-color);
@@ -1615,7 +1615,7 @@ html[dir="rtl"] .dropdownToolbarButton::after {
 .dropdownToolbarButton > select {
   width: 162px;
   height: 28px;
-  font-size: 12px;
+  font-size: 16px;
   color: var(--main-color);
   margin: 0;
   padding: 1px 0 2px;
@@ -1975,8 +1975,8 @@ html[dir="rtl"] .verticalToolbarSeparator {
   border-color: var(--field-border-color);
   box-shadow: none;
   color: var(--field-color);
-  font-size: 12px;
-  line-height: 16px;
+  font-size: 16px;
+  line-height: 135%;
   outline-style: none;
 }
 
@@ -2024,8 +2024,8 @@ html[dir="rtl"] .toolbarField[type="checkbox"] {
   margin: 8px 4px 9px;  
   border-radius: 2px;
   color: var(--main-color);
-  font-size: 12px;
-  line-height: 14px;
+  font-size: 16px;
+  line-height: 120%;
   text-align: left;
   -webkit-user-select: none;
      -moz-user-select: none;
@@ -2149,8 +2149,8 @@ html[dir="rtl"] .treeItem > .treeItems {
   margin-bottom: 1px;
   border-radius: 2px;
   color: var(--treeitem-color);
-  font-size: 13px;
-  line-height: 15px;
+  font-size: 17px;
+  line-height: 115%;
   -webkit-user-select: none;
      -moz-user-select: none;
           user-select: none;
@@ -2292,8 +2292,8 @@ html[dir="rtl"] .treeItemToggler::before {
   padding: 15px;
   border-spacing: 4px;
   color: var(--main-color);
-  font-size: 12px;
-  line-height: 14px;
+  font-size: 16px;
+  line-height: 120%;
   background-color: var(--doorhanger-bg-color);
   border: 1px solid rgba(0, 0, 0, 0.5);
   border-radius: 4px;
@@ -2381,7 +2381,7 @@ html[dir="rtl"] #documentPropertiesOverlay .row > * {
   top: var(--barTop-height);
   right: 0;
   bottom: 0;
-  font-size: 10px;
+  font-size: 14px;
   padding: 0;
   width: 300px;
 }
@@ -2414,14 +2414,14 @@ html[dir="rtl"] #documentPropertiesOverlay .row > * {
 }
 #PDFBug .stats {
   font-family: courier;
-  font-size: 10px;
+  font-size: 14px;
   white-space: pre;
 }
 #PDFBug .stats .title {
   font-weight: bold;
 }
 #PDFBug table {
-  font-size: 10px;
+  font-size: 14px;
 }
 
 #viewer.textLayer-visible .textLayer {
