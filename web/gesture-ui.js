@@ -115,7 +115,7 @@ function checktouchAction(){
 }
 
 //select박스로 비율 조정 시 터치액션 조정
-scaleSelect.addEventListener('change',checktouchAction);
+//scaleSelect.addEventListener('change',checktouchAction);
 
 //resize시 터치액션조정 
 window.addEventListener('resize', checktouchAction);

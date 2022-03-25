@@ -2657,6 +2657,20 @@
   
   function webViewerScaleChanged(evt) {
     PDFViewerApplication.pdfViewer.currentScaleValue = evt.value;
+    //select박스로 비율 조정 시 터치액션 조정
+    const page = document.querySelector('.page');
+    let condition;
+    //모드확인 
+    if(window.matchMedia('(orientation: portrait)').matches){ //세로모드
+        condition = page.offsetWidth > viewer.offsetWidth;
+    }else{
+        condition = page.offsetHeight > viewer.offsetHeight;
+    }
+    if(condition){
+        viewer.style.touchAction = 'pan-x pan-y';
+    }else{
+        viewer.style.touchAction = 'none';
+    }
   }
   
   function webViewerRotateCw() {
@@ -2815,7 +2829,6 @@
       const currentScale = pdfViewer.currentScale;
   
       if (previousScale !== currentScale) {
-        console.log(evt)
         const scaleCorrectionFactor = currentScale / previousScale - 1;
         const rect = pdfViewer.container.getBoundingClientRect();
         const dx = evt.clientX - rect.left;
